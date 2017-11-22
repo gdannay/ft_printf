@@ -15,26 +15,20 @@
 
 void				check_length(t_flag *new, char *str, int *i)
 {
-	if (str[*i] == 'h')
+	if (str[*i] == 'h' && str[*i + 1] == 'h')
 	{
-		if (str[*i + 1] == 'h')
-		{
-			*i = *i + 1;
-			new->length = 1;
-		}
-		else
-			new->length = 2;
+		*i = *i + 1;
+		new->length = 1;
+	}
+	else if (str[*i] == 'h')
+		new->length = 2;
+	else if (str[*i] == 'l' && str[*i + 1i] == 'l')
+	{
+		*i = *i + 1;
+		new->length = 3;
 	}
 	else if (str[*i] == 'l')
-	{
-		if (str[*i + 1] == 'l')
-		{
-			*i = *i + 1;
-			new->length = 3;
-		}
-		else
-			new->length = 4;
-	}
+		new->length = 4;
 	else if (str[*i] == 'L')
 		new->length = 5;
 	else if (str[*i] == 'z')
