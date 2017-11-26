@@ -34,7 +34,7 @@ t_flag				*parse_str(char *str)
 		if (str[i] == '%')
 		{
 			i++;
-			tmp = check_carac(str, &i, &flag);
+			tmp = check_carac(str, &i);
 			if (flag == NULL)
 				flag = tmp;
 			else

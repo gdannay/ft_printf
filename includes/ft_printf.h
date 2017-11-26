@@ -37,6 +37,7 @@ typedef struct			s_flag
 	int					*n;
 	void				*vd;
 	char				*st;
+	int					order;
 	struct s_flag		*next;
 }						t_flag;
 
@@ -51,7 +52,8 @@ void					manage_flag(char *str, int i, t_flag **flag);
 int						length_nbr(int n);
 void					check_length(t_flag *new, char *sstr, int *i);
 void					check_wp(char *str, int *i, t_flag *new);
-t_flag					*check_carac(char *str, int *i, t_flag **flag);
+t_flag					*check_carac(char *str, int *i);
 void					fill_wp(t_flag **tmp, int n);
+void					display(char *str, t_flag *flag);
 
 #endif

@@ -36,6 +36,7 @@ t_flag		*create_flag(void)
 	new->vd = NULL;
 	new->st = NULL;
 	new->next = NULL;
+	new->order = 0;
 	return (new);
 }
 

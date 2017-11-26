@@ -14,7 +14,8 @@ NAME	=	printf
 
 SRCS	=	./srcs/ft_printf.c		\
 			./srcs/lib.c			\
-			./srcs/manage_flag.c	
+			./srcs/manage_flag.c	\
+			./srcs/display.c
 
 OBJS	=	$(SRCS:.c=.o)
 

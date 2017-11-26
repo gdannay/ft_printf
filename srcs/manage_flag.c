@@ -97,15 +97,21 @@ void		check_wp(char *str, int *i, t_flag *new)
 	}
 }
 
-t_flag		*check_carac(char *str, int *i, t_flag **flag)
+t_flag		*check_carac(char *str, int *i)
 {
-	t_flag		*tmp;
 	t_flag		*new;
 	int			j;
 
-	tmp = (*flag);
 	new = create_flag();
 	j = 0;
+	if (str[*i] > '0' && str[*i] <= '9')
+	{
+		if (str[*i + length_nbr(ft_atoi(str[*i]))] == '$')
+		{
+			new->order = ft_atoi(str[*i]);
+			i = *i + length_nbr(new->order);
+		}
+	}
 	while (str[*i] == '-' || str[*i] == '+' || str[*i] == ' ' || str[*i] == '0' || str[*i] == '#')
 	{
 		manage_flag(str, *i, &new);
