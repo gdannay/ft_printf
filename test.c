@@ -3,6 +3,6 @@
 
 int		main()
 {
-	char c = 'B';
-	printf("%hhi", c);
+	unsigned int i = 24;
+	printf("%o", i);
 }

@@ -6,14 +6,15 @@
 #    By: gdannay <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/21 10:47:14 by gdannay           #+#    #+#              #
-#    Updated: 2017/11/22 13:43:53 by gdannay          ###   ########.fr        #
+#    Updated: 2017/11/26 13:47:16 by gdannay          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	=	printf
 
-SRCS	=	./srcs/ft_printf.c	\
-			./srcs/manage.c	
+SRCS	=	./srcs/ft_printf.c		\
+			./srcs/lib.c			\
+			./srcs/manage_flag.c	
 
 OBJS	=	$(SRCS:.c=.o)
 

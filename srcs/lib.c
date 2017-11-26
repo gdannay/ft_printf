@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/21 15:24:19 by gdannay           #+#    #+#             */
-/*   Updated: 2017/11/22 13:44:13 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/11/26 14:15:47 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,24 +27,16 @@ t_flag		*create_flag(void)
 	new->precision = -1;
 	new->length = 0;
 	new->type = 0;
-	new->content = NULL;
+	new->nb = 0;
+	new->lnb = 0;
+	new->inttype = 0;
+	new->db = 0;
+	new->unb = 0;
+	new->n = NULL;
+	new->vd = NULL;
+	new->st = NULL;
 	new->next = NULL;
 	return (new);
-
-}
-
-void		manage_flag(char *str, int i, t_flag **new)
-{
-	if (str[i] == '-')
-		(*new)->minus = 1;
-	if (str[i] == '+')
-		(*new)->plus = 1;
-	if (str[i] == ' ')
-		(*new)->space = 1;
-	if (str[i] == '0')
-		(*new)->zero = 1;
-	if (str[i] == '#')
-		(*new)->hash = 1;
 }
 
 int			length_nbr(int n)
@@ -60,4 +52,12 @@ int			length_nbr(int n)
 		taille++;
 	}
 	return (taille);
+}
+
+void		fill_wp(t_flag **tmp, int n)
+{
+	if ((*tmp)->width == 0)
+		(*tmp)->width = n;
+	if ((*tmp)->precision == 0)
+		(*tmp)->precision = n;
 }
