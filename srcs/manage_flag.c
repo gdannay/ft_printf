@@ -85,13 +85,11 @@ void		check_wp(char *str, int *i, t_flag *new)
 	}
 	else if (str[*i] == '*')
 	{
-		printf("here3\n");
 		new->width = 0;
 		*i = *i + 1;
 	}
 	if (str[*i] > '0' && str[*i] <= '9')
 	{
-		printf("here5\n");
 		new->width = ft_atoi(str + *i);
 		*i = *i + length_nbr(new->width);
 	}
