@@ -1,5 +1,13 @@
 #include <ft_printf.h>
 
+
+
+static void		manage_display(t_flag, int *length)
+{
+	display_flag(t_flag, length);
+
+}
+
 int			display(char *str, t_flag *flag)
 {
 	int	i;
@@ -11,17 +19,11 @@ int			display(char *str, t_flag *flag)
 	tmp = flag;
 	while (str[i] != '\0')
 	{
-		if (str[i] == '%')
+		if (str[i] == '%' && str[i + 1] != '%')
 		{
-			i++;
-			if (str[i] == '%')
-				ft_putchar('%');
-			else
-			{
-				//		manage_display(tmp);
-				while (str[i] && str[i] != tmp->type)
-					i++;
-			}
+//			manage_display(tmp, &length);
+			while (str[i] && str[i] != tmp->type)
+				i++;
 		}
 		else
 			ft_putchar(str[i]);

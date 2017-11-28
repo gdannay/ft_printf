@@ -4,5 +4,5 @@
 int		main()
 {
 	unsigned int i = 24;
-	printf("%d, %d", i, 89);
+	printf("% 040d, %d", i, 89);
 }

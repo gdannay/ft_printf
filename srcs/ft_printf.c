@@ -94,5 +94,5 @@ void				ft_printf(char *str, ...)
 
 int		main()
 {
-	ft_printf("% 040i blrggf%lld %.*s", 42, 52, 10, "Blabla");
+	ft_printf("\n% 040i blrggf%lld %.*s", 42, 52, 10, "Blabla");
 }

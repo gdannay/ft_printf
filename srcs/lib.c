@@ -62,3 +62,8 @@ void		fill_wp(t_flag **tmp, int n)
 	if ((*tmp)->precision == 0)
 		(*tmp)->precision = n;
 }
+
+char	*itoa_base(t_flag *flag)
+{
+	
+}
