@@ -16,6 +16,7 @@
 # include <stdarg.h>
 # include <stdlib.h>
 # include <stdio.h>
+# include <inttypes.h>
 # include "../libft/libft.h"
 
 typedef struct			s_flag
@@ -33,6 +34,10 @@ typedef struct			s_flag
 	int					nb;
 	unsigned int		unb;
 	long				lnb;
+	long long			ll;
+	long double			ld;
+	size_t				sizet;
+	intmax_t			imt;
 	double				db;
 	int					*n;
 	void				*vd;
@@ -54,6 +59,6 @@ void					check_length(t_flag *new, char *sstr, int *i);
 void					check_wp(char *str, int *i, t_flag *new);
 t_flag					*check_carac(char *str, int *i);
 void					fill_wp(t_flag **tmp, int n);
-void					display(char *str, t_flag *flag);
+int						display(char *str, t_flag *flag);
 
 #endif
