@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/21 10:06:04 by gdannay           #+#    #+#             */
-/*   Updated: 2017/11/26 14:08:12 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/11/29 18:22:07 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,11 @@
 # include <stdio.h>
 # include <inttypes.h>
 # include "../libft/libft.h"
+
+# define BINA "01"
+# define DECI "0123456789"
+# define HEXAMIN "0123456789abcdef"
+# define HEXAMAJ "0123456789ABCDEF"
 
 typedef struct			s_flag
 {
@@ -31,10 +36,8 @@ typedef struct			s_flag
 	int					length;
 	char				type;
 	int					inttype;
-	int					nb;
-	unsigned int		unb;
-	long				lnb;
-	long long			ll;
+	long long			nb;
+	unsigned long long	unb;
 	long double			ld;
 	size_t				sizet;
 	intmax_t			imt;
@@ -53,12 +56,11 @@ typedef struct			s_type
 }						t_type;
 
 t_flag					*create_flag(void);
-void					manage_flag(char *str, int i, t_flag **flag);
 int						length_nbr(int n);
-void					check_length(t_flag *new, char *sstr, int *i);
-void					check_wp(char *str, int *i, t_flag *new);
 t_flag					*check_carac(char *str, int *i);
 void					fill_wp(t_flag **tmp, int n);
 int						display(char *str, t_flag *flag);
+char					*ltoa_base(t_flag *tmp, char *base);
+char					*dtoa(t_flag *tmp);
 
 #endif

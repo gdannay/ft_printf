@@ -3,6 +3,7 @@
 
 int		main()
 {
-	unsigned int i = 24;
-	printf("% 040d, %d", i, 89);
+	float i = 1234.1;
+	int b = i;
+	printf("%.1f, %d", i, b);
 }

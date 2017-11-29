@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/21 15:24:19 by gdannay           #+#    #+#             */
-/*   Updated: 2017/11/26 14:15:47 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/11/29 17:06:44 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,9 @@ t_flag		*create_flag(void)
 	new->length = 0;
 	new->type = 0;
 	new->nb = 0;
-	new->lnb = 0;
+	new->unb = 0;
 	new->inttype = 0;
 	new->db = 0;
-	new->unb = 0;
 	new->n = NULL;
 	new->vd = NULL;
 	new->st = NULL;
@@ -61,9 +60,4 @@ void		fill_wp(t_flag **tmp, int n)
 		(*tmp)->width = n;
 	if ((*tmp)->precision == 0)
 		(*tmp)->precision = n;
-}
-
-char	*itoa_base(t_flag *flag)
-{
-	
 }

@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/26 13:40:36 by gdannay           #+#    #+#             */
-/*   Updated: 2017/11/26 14:15:33 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/11/29 17:41:38 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_type		typeconv[] =
 	{'A', 5},
 };
 
-void		check_length(t_flag *new, char *str, int *i)
+static void		check_length(t_flag *new, char *str, int *i)
 {
 	if (str[*i] == 'h' && str[*i + 1] == 'h')
 	{
@@ -67,8 +67,18 @@ void		check_length(t_flag *new, char *str, int *i)
 	*i = *i + 1;
 }
 
-void		check_wp(char *str, int *i, t_flag *new)
+static void		check_wp(char *str, int *i, t_flag *new)
 {
+	if (str[*i] > '0' && str[*i] <= '9')
+	{
+		new->width = ft_atoi(str + *i);
+		*i = *i + length_nbr(new->width);
+	}
+	else if (str[*i] == '*')
+	{
+		new->width = 0;
+		*i = *i + 1;
+	}
 	if (str[*i] == '.')
 	{
 		if (str[*i + 1] == '*')
@@ -83,16 +93,20 @@ void		check_wp(char *str, int *i, t_flag *new)
 			*i = *i + length_nbr(new->width);
 		}
 	}
-	else if (str[*i] == '*')
-	{
-		new->width = 0;
-		*i = *i + 1;
-	}
-	if (str[*i] > '0' && str[*i] <= '9')
-	{
-		new->width = ft_atoi(str + *i);
-		*i = *i + length_nbr(new->width);
-	}
+}
+
+static void		manage_flag(char *str, int i, t_flag **new)
+{
+	if (str[i] == '-')
+		(*new)->minus = 1;
+	if (str[i] == '+')
+		(*new)->plus = 1;
+	if (str[i] == ' ')
+		(*new)->space = 1;
+	if (str[i] == '0')
+		(*new)->zero = 1;
+	if (str[i] == '#')
+		(*new)->hash = 1;
 }
 
 t_flag		*check_carac(char *str, int *i)
@@ -125,18 +139,4 @@ t_flag		*check_carac(char *str, int *i)
 		j++;
 	}
 	return (new);
-}
-
-void		manage_flag(char *str, int i, t_flag **new)
-{
-	if (str[i] == '-')
-		(*new)->minus = 1;
-	if (str[i] == '+')
-		(*new)->plus = 1;
-	if (str[i] == ' ')
-		(*new)->space = 1;
-	if (str[i] == '0')
-		(*new)->zero = 1;
-	if (str[i] == '#')
-		(*new)->hash = 1;
 }
