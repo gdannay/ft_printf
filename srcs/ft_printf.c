@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/21 10:02:16 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/01 11:00:42 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/01 20:15:18 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static t_flag			*parse_str(char *str)
 	tmp = NULL;
 	tmp2 = NULL;
 	i = 0;
-	while (str[i] != '\0')
+	while (str && str[i] != '\0')
 	{
 		if (str[i] == '%')
 		{
@@ -47,7 +47,7 @@ static void			fill_content(va_list va, t_flag *tmp)
 			fill_wp(&tmp, va_arg(va, int));
 		if (tmp->length == 3 && tmp->inttype == 4)
 			tmp->unb = va_arg(va, unsigned long long);
-		else if (tmp->length == 3)
+		else if (tmp->length == 3 || tmp->inttype == 6)
 			tmp->nb = va_arg(va, long long);
 		else if (tmp->length == 4)
 			tmp->nb = va_arg(va, long);
@@ -62,39 +62,46 @@ static void			fill_content(va_list va, t_flag *tmp)
 		else if (tmp->inttype == 2)
 			tmp->st = va_arg(va, char *);
 		else if (tmp->inttype == 3)
-			tmp->vd = va_arg(va, void *);
+			tmp->unb = (unsigned long long)va_arg(va, void *);
 		else if (tmp->inttype == 4)
 			tmp->unb = va_arg(va, unsigned int);
 		else if (tmp->inttype == 5)
 			tmp->db = va_arg(va, double);
 }
 
-void				ft_printf(char *str, ...)
+int					ft_printf(char *str, ...)
 {
 	va_list		va;
 	va_start	(va, str);
 	t_flag		*flag;
 	t_flag		*tmp;
+	char		*new = NULL;
 
 	flag = parse_str(str);
 	tmp = flag;
+//	printf("TEST = %lld\n", tmp->nb);
 	while (tmp)
 	{
 		fill_content(va, tmp);
 		tmp = tmp->next;
 	}
-	display(str, flag);
+	new = display(str, flag);
 
 //	printf("minus = %d, plus = %d, space = %d, zero = %d, hash = %d, width = %d, precision = %d, length = %d, type = %c, inttype = %d, %d\n", flag->minus, flag->plus, flag->space, flag->zero, flag->hash, flag->width, flag->precision, flag->length, flag->type, flag->inttype, flag->nb);
 //	flag = flag->next;
-//	printf("minus = %d, plus = %d, space = %d, zero = %d, hash = %d, width = %d, precision = %d, length = %d, type = %c, inttype = %d\n", flag->minus, flag->plus, flag->space, flag->zero, flag->hash, flag->width, flag->precision, flag->length, flag->type, flag->inttype);
+//i	printf("minus = %d, plus = %d, space = %d, zero = %d, hash = %d, width = %d, precision = %d, length = %d, type = %c, inttype = %d\n", flag->minus, flag->plus, flag->space, flag->zero, flag->hash, flag->width, flag->precision, flag->length, flag->type, flag->inttype);
 //	flag = flag->next;
 //	printf("minus = %d, plus = %d, space = %d, zero = %d, hash = %d, width = %d, precision = %d, length = %d, type = %c, inttype = %d, %s\n", flag->minus, flag->plus, flag->space, flag->zero, flag->hash, flag->width, flag->precision, flag->length, flag->type, flag->inttype, flag->st);
 //	flag = flag->next;
+//	printf("minus = %d, plus = %d, space = %d, zero = %d, hash = %d, width = %d, precision = %d, length = %d, type = %c, inttype = %d, %s\n", flag->minus, flag->plus, flag->space, flag->zero, flag->hash, flag->width, flag->precision, flag->length, flag->type, flag->inttype, flag->st);
 	va_end (va);
+	ft_putstr(new);
+	return ((int)(ft_strlen(new)));
 }
 
-int		main()
+/*int		main()
 {
-	ft_printf("\n% 040i blrggf%lld %.*s", 42, 52, 10, "Blabla");
-}
+	printf("\n%d", ft_printf("%lX", 4294967296));
+	printf("\n");
+	printf("\n%d", printf("%lX", 4294967296));
+}*/

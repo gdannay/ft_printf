@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/21 15:24:19 by gdannay           #+#    #+#             */
-/*   Updated: 2017/11/29 17:06:44 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/01 16:18:30 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,15 @@ void		fill_wp(t_flag **tmp, int n)
 		(*tmp)->width = n;
 	if ((*tmp)->precision == 0)
 		(*tmp)->precision = n;
+}
+
+char		*chartostr(long long c)
+{
+	char *new;
+
+	if ((new = (char *)malloc(sizeof(char) * 2)) == NULL)
+		return (NULL);
+	new[0] = c;
+	new [1] = '\0';
+	return (new);
 }

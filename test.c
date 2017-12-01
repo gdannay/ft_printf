@@ -1,9 +1,8 @@
-
+#include "includes/ft_printf.h"
 #include <stdio.h>
 
 int		main()
 {
-	float i = 1234.1;
-	int b = i;
-	printf("%.1f, %d", i, b);
+	char *str = "test";
+	ft_printf("%.3s", str);
 }

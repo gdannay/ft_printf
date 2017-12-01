@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/26 13:40:36 by gdannay           #+#    #+#             */
-/*   Updated: 2017/11/29 17:41:38 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/01 20:06:07 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ t_type		typeconv[] =
 	{'O', 4},
 	{'u', 4},
 	{'U', 4},
-	{'x', 4},
-	{'X', 4},
+	{'x', 6},
+	{'X', 6},
 	{'e', 5},
 	{'E', 5},
 	{'f', 5},
@@ -90,7 +90,7 @@ static void		check_wp(char *str, int *i, t_flag *new)
 		{
 			*i = *i + 1;
 			new->precision = ft_atoi(str + *i);
-			*i = *i + length_nbr(new->width);
+			*i = *i + length_nbr(new->precision);
 		}
 	}
 }

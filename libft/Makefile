@@ -6,7 +6,7 @@
 #    By: gdannay <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/07 18:54:36 by gdannay           #+#    #+#              #
-#    Updated: 2017/11/14 18:16:25 by gdannay          ###   ########.fr        #
+#    Updated: 2017/12/01 18:51:31 by gdannay          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,7 +75,8 @@ SRCS	=		ft_memset.c		\
 				ft_puttab.c		\
 				ft_lstsize.c	\
 				ft_capitalize.c	\
-				ft_lowercase.c
+				ft_lowercase.c	\
+				ft_strndup.c
 					
 CC		=		gcc
 

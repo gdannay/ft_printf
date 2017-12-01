@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 17:14:04 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/01 10:38:18 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/01 20:14:38 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ char			*ltoa_base(t_flag *tmp, char *base)
 	while (n)
 	{
 		n /= (long long)ft_strlen(base);
+//		printf("N = %lld\n", n);
 		taille++;
 	}
 	if (tmp->nb <= 0)
@@ -67,7 +68,7 @@ char			*utoa_base(t_flag *tmp, char *base)
 		n /= (long long)ft_strlen(base);
 		taille++;
 	}
-	if (tmp->unb = 0)
+	if (tmp->unb == 0)
 		taille++;
 	if ((new = (char *)malloc(sizeof(char) * (taille + 1))) == NULL)
 		return (NULL);
@@ -94,7 +95,7 @@ char			*dtoa(t_flag *tmp)
 		tmp->ld *= 10;
 		tmp->nb = (long long)tmp->ld;
 		c = tmp->nb % 10 +'0';
-		printf ("ld = %Lf, nb = %lld, c = %c\n", tmp->ld, tmp->nb, c);
+//		printf ("ld = %Lf, nb = %lld, c = %c\n", tmp->ld, tmp->nb, c);
 		new = ft_strjoin(tmptxt, &c);
 		free(tmptxt);
 		i++;

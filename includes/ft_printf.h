@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/21 10:06:04 by gdannay           #+#    #+#             */
-/*   Updated: 2017/11/29 18:22:07 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/01 18:25:24 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # define DECI "0123456789"
 # define HEXAMIN "0123456789abcdef"
 # define HEXAMAJ "0123456789ABCDEF"
+# define OCTA "01234567"
 
 typedef struct			s_flag
 {
@@ -40,7 +41,7 @@ typedef struct			s_flag
 	unsigned long long	unb;
 	long double			ld;
 	size_t				sizet;
-	intmax_t			imt;
+//	intmax_t			imt;
 	double				db;
 	int					*n;
 	void				*vd;
@@ -55,12 +56,16 @@ typedef struct			s_type
 	int					conv;
 }						t_type;
 
+int						ft_printf(char *str, ...);
 t_flag					*create_flag(void);
 int						length_nbr(int n);
 t_flag					*check_carac(char *str, int *i);
 void					fill_wp(t_flag **tmp, int n);
-int						display(char *str, t_flag *flag);
+char					*display(char *str, t_flag *flag);
 char					*ltoa_base(t_flag *tmp, char *base);
+char					*utoa_base(t_flag *tmp, char *base);
 char					*dtoa(t_flag *tmp);
+char					*chartostr(long long c);
+char					*display_flag(char *new, t_flag *tmp);
 
 #endif

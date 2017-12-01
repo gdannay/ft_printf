@@ -1,41 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/13 10:22:51 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/01 17:11:20 by gdannay          ###   ########.fr       */
+/*   Created: 2017/11/09 21:40:08 by gdannay           #+#    #+#             */
+/*   Updated: 2017/12/01 18:44:36 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include <string.h>
-#include <stdio.h>
-#include "libft.h"
+#include <stdlib.h>
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strndup(const char *s, size_t n)
 {
-	size_t	size1;
-	size_t	size2;
+	int		i;
 	char	*new;
-	size_t	i;
-	size_t	j;
 
 	i = 0;
-	j = 0;
-	size1 = ft_strlen(s1);
-	size2 = ft_strlen(s2);
-	if ((new = (char *)malloc(sizeof(char) * (size1 + size2 + 1))) == NULL)
-		return (0);
-	while (s1 && s1[i] != '\0')
+	while (s && s[i] != '\0' && (size_t)i < n)
+		i++;
+	if ((new = (char *)malloc(sizeof(char) * (i + 1))) == NULL)
+		return (NULL);
+	i = 0;
+	while (s && s[i] != '\0' && (size_t)i < n)
 	{
-		new[i] = s1[i];
+		new[i] = s[i];
 		i++;
 	}
-	while (s2 && s2[j] != '\0')
-		new[i++] = s2[j++];
 	new[i] = '\0';
 	return (new);
 }
