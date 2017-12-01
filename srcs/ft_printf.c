@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/21 10:02:16 by gdannay           #+#    #+#             */
-/*   Updated: 2017/11/29 17:08:43 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/01 11:00:42 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static void			fill_content(va_list va, t_flag *tmp)
 		else if (tmp->length == 6)
 			tmp->sizet = va_arg(va, size_t);
 		else if (tmp->length == 7)
-			tmp->imt = va_arg(va, intmax_t);
+			tmp->nb = va_arg(va, intmax_t);
 		else if (tmp->inttype == 1)
 			tmp->nb = va_arg(va, int);
 		else if (tmp->inttype == 2)
