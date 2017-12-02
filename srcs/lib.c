@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/21 15:24:19 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/01 16:18:30 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/02 11:50:37 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ char		*chartostr(long long c)
 
 	if ((new = (char *)malloc(sizeof(char) * 2)) == NULL)
 		return (NULL);
-	new[0] = c;
-	new [1] = '\0';
+	new[0] = (char)c;
+	new[1] = '\0';
 	return (new);
 }

@@ -1,15 +1,3 @@
-# **************************************************************************** #
-                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: gdannay <marvin@42.fr>                     +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2017/11/21 10:47:14 by gdannay           #+#    #+#              #
-#    Updated: 2017/12/01 18:46:08 by gdannay          ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 NAME	=	libftprintf.a
 
 SRCS	=	./srcs/ft_printf.c		\
@@ -17,13 +5,15 @@ SRCS	=	./srcs/ft_printf.c		\
 			./srcs/manage_flag.c	\
 			./srcs/display.c		\
 			./srcs/ltoa_base.c		\
+			./srcs/display_type.c	\
 			./srcs/display_flag.c	\
 			./libft/ft_strndup.c	\
 			./libft/ft_atoi.c		\
 			./libft/ft_putstr.c		\
-			./libft/ft_putchar.c		\
+			./libft/ft_putchar.c	\
 			./libft/ft_strjoin.c	\
 			./libft/ft_strlen.c		\
+			./libft/ft_strdup.c
 
 OBJS	=	$(SRCS:.c=.o)
 
@@ -36,17 +26,17 @@ CC		=	gcc
 all		:	$(NAME)
 
 $(NAME)	:	$(OBJS) $(LIBFT)
-			make -C libft
-			ar rc $(NAME) $(OBJS)
-			ranlib $(NAME)
+	make -C libft
+	ar rc $(NAME) $(OBJS)
+	ranlib $(NAME)
 
 %.o		:	%.c
-			$(CC) -o $@ -c $< $(CFLAGS)
+	$(CC) -o $@ -c $< $(CFLAGS)
 
 clean	:	
-			rm -rf $(OBJS)
+	rm -rf $(OBJS)
 
 fclean	:	clean
-			rm -rf $(NAME)
+	rm -rf $(NAME)
 
 re		:	fclean all

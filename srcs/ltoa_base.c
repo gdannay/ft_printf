@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 17:14:04 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/01 20:14:38 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/02 12:40:04 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ char			*ltoa_base(t_flag *tmp, char *base)
 	while (n)
 	{
 		n /= (long long)ft_strlen(base);
-//		printf("N = %lld\n", n);
 		taille++;
 	}
 	if (tmp->nb <= 0)

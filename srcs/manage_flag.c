@@ -6,36 +6,36 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/26 13:40:36 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/01 20:06:07 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/02 17:56:08 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-t_type		typeconv[] =
+static t_type	typeconv[] =
 {
-	{'d', 1},
-	{'D', 1},
-	{'i', 1},
-	{'c', 1},
-	{'C', 1},
-	{'s', 2},
-	{'S', 2},
-	{'p', 3},
-	{'o', 4},
-	{'O', 4},
-	{'u', 4},
-	{'U', 4},
-	{'x', 6},
-	{'X', 6},
-	{'e', 5},
-	{'E', 5},
-	{'f', 5},
-	{'F', 5},
-	{'g', 5},
-	{'G', 5},
-	{'a', 5},
-	{'A', 5},
+	{'d', 1, 1},
+	{'D', 1, 1},
+	{'i', 1, 1},
+	{'c', 1, 2},
+	{'C', 1, 2},
+	{'s', 2, 3},
+	{'S', 2, 3},
+	{'p', 3, 4},
+	{'o', 4, 1},
+	{'O', 4, 1},
+	{'u', 4, 1},
+	{'U', 4, 1},
+	{'x', 6, 1},
+	{'X', 6, 1},
+	{'e', 5, 5},
+	{'E', 5, 5},
+	{'f', 5, 5},
+	{'F', 5, 5},
+	{'g', 5, 5},
+	{'G', 5, 5},
+	{'a', 5, 5},
+	{'A', 5, 5},
 };
 
 static void		check_length(t_flag *new, char *str, int *i)
@@ -135,7 +135,10 @@ t_flag		*check_carac(char *str, int *i)
 	while (j < 22)
 	{
 		if (new->type == typeconv[j].type)
+		{
 			new->inttype = typeconv[j].conv;
+			new->intdisplay = typeconv[j].display;
+		}
 		j++;
 	}
 	return (new);

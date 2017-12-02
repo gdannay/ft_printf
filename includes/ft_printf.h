@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/21 10:06:04 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/01 18:25:24 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/02 18:30:17 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,12 @@ typedef struct			s_flag
 	int					length;
 	char				type;
 	int					inttype;
+	int					intdisplay;
 	long long			nb;
 	unsigned long long	unb;
 	long double			ld;
 	size_t				sizet;
-//	intmax_t			imt;
+	intmax_t			imt;
 	double				db;
 	int					*n;
 	void				*vd;
@@ -54,6 +55,7 @@ typedef struct			s_type
 {
 	char				type;
 	int					conv;
+	int					display;
 }						t_type;
 
 int						ft_printf(char *str, ...);
@@ -67,5 +69,8 @@ char					*utoa_base(t_flag *tmp, char *base);
 char					*dtoa(t_flag *tmp);
 char					*chartostr(long long c);
 char					*display_flag(char *new, t_flag *tmp);
+char					*manage_nb(t_flag *tmp);
+char					*manage_string(t_flag *tmp);
+char					*manage_char(t_flag *tmp);
 
 #endif
