@@ -6,14 +6,96 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/01 10:23:15 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/02 19:28:37 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/04 13:46:18 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static void		*display_hash(char **new, t_flag *tmp)
+static char		*display_hash_blank(char *new, t_flag *tmp)
 {
+	char *tmptxt;
+
+	tmptxt = new;
+	if (tmp->type == 'x')
+		new = ft_strjoin("0x", tmptxt);
+	else if (tmp->type == 'X')
+		new = ft_strjoin("0X", tmptxt);
+	else if (tmp->type == 'o' || tmp->type == 'O')
+		new = ft_strjoin("0", tmptxt);
+	return (new);
+}
+
+static char			*display_hash_zero(char *new, t_flag *tmp)
+{
+	char *tmptxt;
+
+	tmptxt = new;
+	if (tmp->type == 'x' || tmp->type == 'X')
+	{
+		if (new[0] == '0' && new[1] == '0')
+			new[1] = tmp->type;
+		else if (new[0] == '0' && new[1] != '0')
+		{
+			new[0] = tmp->type;
+			new = ft_strjoin("0", tmptxt);
+		}
+		else if (new[0] != 0)
+		{
+			if (tmp->type == 'x')
+				new = ft_strjoin("0x", tmptxt);
+			if (tmp->type == 'X')
+				new = ft_strjoin("0X", tmptxt);
+		}
+	}
+	return (new);
+}
+
+static char		*correction_sign(char *new, t_flag *tmp)
+{
+	int	i;
+
+	i = 1;
+	if (tmp->nb < 0 && tmp->zero == 1 && new[0] == '0')
+	{
+		new[0] = '-';
+		while (new[i] && new[i] == '0')
+			i++;
+		new[i] = '0';
+	}
+	else if (tmp->nb < 0 && new[0] == '0')
+	{
+		while (new[i] && new[i] == '0')
+			i++;
+		new[i] = '0';
+		new = ft_strjoin("-", new);
+	}
+	else if (tmp->nb >= 0 && tmp->plus == 1 && tmp->zero == 1 && new[0] == '0')
+	{
+		new[0] = '+';
+		while (new[i] && new[i] != '0')
+			i++;
+		new[i] = '0';
+	}
+	else if (tmp->nb >= 0 && tmp->plus == 1 && new[0] == ' ')
+	{
+		while (new[i] && new[i] == ' ')
+			i++;
+		new[i - 1] = '+';
+	}
+	else if (tmp->nb >= 0 && tmp->plus == 1)
+	{
+		if ((int)ft_strlen(new) == tmp->width)
+		{
+			new = ft_strjoin("+", new);
+			new[(int)ft_strlen(new) - 1] = '\0';
+		}
+		else
+			new = ft_strjoin("+", new);
+	}
+	else if (tmp->space == 1 && tmp->nb >= 0 && tmp->width < (int)ft_strlen(new))
+		new = ft_strjoin(" ", new);
+	return (new);
 }
 
 char		*display_flag(char *new, t_flag *tmp)
@@ -21,7 +103,15 @@ char		*display_flag(char *new, t_flag *tmp)
 	char *tmptxt;
 
 	tmptxt = new;
-//	free(tmptxt);
+	if (tmp->hash == 1 && (tmp->type == 'o' || tmp->type == 'O') && tmp->precision == 0)
+		tmp->hash = 1;
+	else if (tmp->nb == 0 && tmp->unb == 0)
+		tmp->hash = 0;
+	if (tmp->minus == 1)
+		tmp->zero = 0;
+	if (tmp->intdisplay == 6 && tmp->hash == 1 && tmp->zero == 0)
+		new = display_hash_blank(new, tmp);
+	//	free(tmptxt);
 	while ((int)ft_strlen(new) < tmp->width)
 	{
 		tmptxt = new;
@@ -31,7 +121,11 @@ char		*display_flag(char *new, t_flag *tmp)
 			new = ft_strjoin("0", tmptxt);
 		else
 			new = ft_strjoin(" ", tmptxt);
-//		free(tmptxt);
+		//		free(tmptxt);
 	}
+	if (tmp->intdisplay == 6 && tmp->hash == 1 && tmp->zero == 1)
+		new = display_hash_zero(new, tmp);
+	if (tmp->intdisplay == 1 && tmp->type != 'u' && tmp->type != 'U')
+		new = correction_sign(new, tmp);
 	return (new);
 }

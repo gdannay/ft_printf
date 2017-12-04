@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/21 10:02:16 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/02 18:34:24 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/04 14:42:28 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static t_flag			*parse_str(char *str)
 
 static void			fill_content(va_list va, t_flag *tmp)
 {
-		if (tmp->width == 0 || tmp->precision == 0)
+		if (tmp->width == -2 || tmp->precision == -2)
 			fill_wp(&tmp, va_arg(va, int));
 		else if (tmp->length == 3 && tmp->inttype != 4)
 			tmp->nb = va_arg(va, long long);
@@ -58,16 +58,26 @@ static void			fill_content(va_list va, t_flag *tmp)
 			tmp->ld = va_arg(va, long double);
 		else if (tmp->length == 6)
 			tmp->nb = va_arg(va, size_t);
-		else if (tmp->length == 7 && tmp->inttype == 1)
-			tmp->nb = va_arg(va, intmax_t);
 		else if (tmp->length == 7 && tmp->inttype == 4)
 			tmp->unb = va_arg(va, intmax_t);
+		else if (tmp->length == 7)
+			tmp->nb = va_arg(va, intmax_t);
+		else if (tmp->inttype == 1 && tmp->length == 2)
+			tmp->nb = (short)va_arg(va, int);
+		else if (tmp->inttype == 1 && tmp->length == 1)
+			tmp->nb = (char)va_arg(va, int);
 		else if (tmp->inttype == 1)
 			tmp->nb = va_arg(va, int);
 		else if (tmp->inttype == 2)
 			tmp->st = va_arg(va, char *);
+		else if (tmp->type == 'U')
+			tmp->unb = (unsigned long long)va_arg(va, unsigned long long);
 		else if (tmp->inttype == 3)
 			tmp->unb = (unsigned long long)va_arg(va, void *);
+		else if (tmp->inttype == 4 && tmp->length == 2)
+			tmp->unb = (unsigned short)va_arg(va, int);
+		else if (tmp->inttype == 4 && tmp->length == 1)
+			tmp->unb = (unsigned char)va_arg(va, int);
 		else if (tmp->inttype == 4)
 			tmp->unb = va_arg(va, unsigned int);
 		else if (tmp->inttype == 5)
@@ -108,9 +118,9 @@ int					ft_printf(char *str, ...)
 	return ((int)(ft_strlen(new)));
 }
 
-/*int		main()
+int		main()
 {
-	printf("\n%d", ft_printf("%d", 42));
+	printf("\n%d", ft_printf("%jx", 10));
 	printf("\n");
-	printf("\n%d", printf("%d", 42));
-}*/
+	printf("\n%d", printf("%jx", 10));
+}

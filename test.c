@@ -3,6 +3,5 @@
 
 int		main()
 {
-	char *str = "test";
-	ft_printf("%.3s", str);
+	printf("%010x", 52);
 }

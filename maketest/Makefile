@@ -13,7 +13,8 @@ SRCS	=	./srcs/ft_printf.c		\
 			./libft/ft_putchar.c	\
 			./libft/ft_strjoin.c	\
 			./libft/ft_strlen.c		\
-			./libft/ft_strdup.c
+			./libft/ft_strdup.c		\
+			./libft/ft_strncmp.c
 
 OBJS	=	$(SRCS:.c=.o)
 

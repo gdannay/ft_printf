@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/21 15:24:19 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/02 11:50:37 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/04 11:19:50 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,9 @@ int			length_nbr(int n)
 
 void		fill_wp(t_flag **tmp, int n)
 {
-	if ((*tmp)->width == 0)
+	if ((*tmp)->width == -2)
 		(*tmp)->width = n;
-	if ((*tmp)->precision == 0)
+	if ((*tmp)->precision == -2)
 		(*tmp)->precision = n;
 }
 

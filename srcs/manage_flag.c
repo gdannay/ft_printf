@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/26 13:40:36 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/02 17:56:08 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/04 13:28:45 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ static t_type	typeconv[] =
 	{'s', 2, 3},
 	{'S', 2, 3},
 	{'p', 3, 4},
-	{'o', 4, 1},
-	{'O', 4, 1},
+	{'o', 4, 6},
+	{'O', 4, 6},
 	{'u', 4, 1},
 	{'U', 4, 1},
-	{'x', 6, 1},
-	{'X', 6, 1},
+	{'x', 6, 6},
+	{'X', 6, 6},
 	{'e', 5, 5},
 	{'E', 5, 5},
 	{'f', 5, 5},
@@ -76,22 +76,24 @@ static void		check_wp(char *str, int *i, t_flag *new)
 	}
 	else if (str[*i] == '*')
 	{
-		new->width = 0;
+		new->width = -2;
 		*i = *i + 1;
 	}
 	if (str[*i] == '.')
 	{
-		if (str[*i + 1] == '*')
+		*i = *i + 1;
+		if (str[*i] == '*')
 		{
-			new->precision = 0;
-			*i = *i + 2;
-		}
-		else
-		{
+			new->precision = -2;
 			*i = *i + 1;
+		}
+		else if (str[*i] >= '0' && str[*i] <= '9')
+		{
 			new->precision = ft_atoi(str + *i);
 			*i = *i + length_nbr(new->precision);
 		}
+		else
+			new->precision = 0;
 	}
 }
 

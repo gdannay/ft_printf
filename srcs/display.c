@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 15:03:31 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/02 18:24:55 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/04 10:10:52 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static char		*manage_display(t_flag *tmp)
 	char	*new;
 
 	new = NULL;
-	if (tmp->intdisplay == 1)
+	if (tmp->intdisplay == 1 || tmp->intdisplay == 6)
 		new = manage_nb(tmp);
 	else if (tmp->intdisplay == 2) 
 		new = manage_char(tmp);
