@@ -6,13 +6,11 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/02 18:22:57 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/05 11:22:36 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/05 17:03:35 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-
 
 static char		*manage_hexa(t_flag *tmp)
 {
@@ -20,6 +18,7 @@ static char		*manage_hexa(t_flag *tmp)
 	long long n;
 	long long n2;
 	long long taille;
+	char *tmptxt;
 
 	new = NULL;
 	n = tmp->nb;
@@ -27,6 +26,7 @@ static char		*manage_hexa(t_flag *tmp)
 	taille = 0;
 	if (tmp->nb <= -4294967296)
 	{
+		tmptxt = new;
 		while (n)
 		{
 			n /= 4294967297;
@@ -44,6 +44,8 @@ static char		*manage_hexa(t_flag *tmp)
 			new = ft_strjoin(new, ltoa_base(tmp, HEXAMIN));
 		else if (tmp->type == 'X')
 			new = ft_strjoin(new, ltoa_base(tmp, HEXAMAJ));
+		if (tmptxt)
+			free(tmptxt);
 	}
 	else
 	{
@@ -53,13 +55,15 @@ static char		*manage_hexa(t_flag *tmp)
 		else if (tmp->type == 'X')
 			new = ltoa_base(tmp, HEXAMAJ);
 	}
+	if (new == NULL)
+		return (NULL);
 	return (new);
 }
 
-char		*manage_nb(t_flag *tmp)
+int			manage_nb(t_flag *tmp)
 {
-	char *new;
-	char *tmptxt;
+	char	*new;
+	int		length;
 
 	new = NULL;
 	if (tmp->inttype == 6 && tmp->nb < 0)
@@ -75,42 +79,46 @@ char		*manage_nb(t_flag *tmp)
 	else if (tmp->type == 'o' || tmp->type == 'O')
 		new = utoa_base(tmp, OCTA);
 	if (new == NULL)
-		return NULL;
+		return (0);
 	if (tmp->precision == 0 && ft_strncmp(new, "0", 1) == 0)
-		new = "";
-	if ((int)ft_strlen(new) < tmp->precision)
 	{
-		while ((int)ft_strlen(new) < tmp->precision)
-			new = ft_strjoin("0", new);
-		tmp->zero = 0;
+		free(new);
+		new = NULL;
 	}
-	tmptxt = new;
-	if((new = display_flag(tmptxt, tmp)) == NULL)
-		return (NULL);
-//	free(tmptxt);
-	return (new);
+	length = display_flag(new, tmp);
+	return (length);
 }
 
-char		*manage_string(t_flag *tmp)
+int		manage_string(t_flag *tmp)
 {
+	char *tmptxt;
+	int length;
+
 	if (tmp->st == NULL)
 		tmp->st = ft_strdup("(null)");
 	if (tmp->precision >= 0)
-		return (display_flag(ft_strndup(tmp->st, (size_t)tmp->precision), tmp));
+	{
+		if ((tmptxt = ft_strndup(tmp->st, (size_t)tmp->precision)) == NULL)
+			return (0);
+		length = display_flag(tmptxt, tmp);
+		free(tmptxt);
+		return (length);
+	}
 	else
 		return (display_flag(tmp->st, tmp));
 }
 
-char		*manage_char(t_flag *tmp)
+int			manage_char(t_flag *tmp)
 {
-	char 	*new;
 	int 	i;
+	char	*new;
 
 	i = 0;
 	if (tmp->nb == 0)
 	{
 		tmp->nb = 1;
-		new = display_flag(chartostr(tmp->nb), tmp);
+		new = display_precision(chartostr(tmp->nb), tmp);
+		new = display_width(chartostr(tmp->nb), tmp);
 		while (new[i] != '\0')
 		{
 			if (new[i] == 1)
@@ -122,6 +130,6 @@ char		*manage_char(t_flag *tmp)
 		tmp->nb = 0;
 	}
 	else
-		new = display_flag(chartostr(tmp->nb), tmp);
-	return (new);
+		return (display_flag(chartostr(tmp->nb), tmp));
+	return (i);
 }

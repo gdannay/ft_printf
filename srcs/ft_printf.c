@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/21 10:02:16 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/05 11:08:08 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/05 16:01:33 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,14 +86,29 @@ static void			fill_content(va_list va, t_flag *tmp)
 			tmp->nb = va_arg(va, int);
 }
 
+void				free_lst(t_flag **flag)
+{
+	t_flag *tmp;
+
+	while (*flag)
+	{
+		tmp = (*flag)->next;
+//		if ((*flag)->st != NULL)
+//			free((*flag)->st);
+		free(*flag);
+		(*flag) = tmp;
+	}
+}
+
 int					ft_printf(char *str, ...)
 {
 	va_list		va;
 	va_start	(va, str);
 	t_flag		*flag;
 	t_flag		*tmp;
-	char		*new = NULL;
+	int			length;
 
+	length = 0;
 	if ((flag = parse_str(str)) == NULL && str == NULL)
 		return (0);
 	tmp = flag;
@@ -102,8 +117,8 @@ int					ft_printf(char *str, ...)
 		fill_content(va, tmp);
 		tmp = tmp->next;
 	}
-	if ((new = display(str, flag)) == NULL)
-		return (0);
+	length = display(str, flag);
+	free_lst(&flag);
 
 //	printf("minus = %d, plus = %d, space = %d, zero = %d, hash = %d, width = %d, precision = %d, length = %d, type = %c, inttype = %d, %d\n", flag->minus, flag->plus, flag->space, flag->zero, flag->hash, flag->width, flag->precision, flag->length, flag->type, flag->inttype, flag->nb);
 //	flag = flag->next;
@@ -115,12 +130,12 @@ int					ft_printf(char *str, ...)
 	va_end (va);
 //	printf("%s", new);
 //	ft_putstr(new);
-	return ((int)(ft_strlen(new)));
+	return (length);
 }
 
 /*int		main()
 {
-	printf("\n%d", ft_printf("%jx", 10));
+	printf("\n%d", ft_printf("%s", "Bllbl"));
 	printf("\n");
-	printf("\n%d", printf("%jx", 10));
+	printf("\n%d", printf("%s", "Bllbl"));
 }*/

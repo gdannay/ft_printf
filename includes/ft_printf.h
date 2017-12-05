@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/21 10:06:04 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/05 10:35:29 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/05 12:54:31 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,15 +63,17 @@ t_flag					*create_flag(void);
 int						length_nbr(int n);
 t_flag					*check_carac(char *str, int *i);
 void					fill_wp(t_flag **tmp, int n);
-char					*display(char *str, t_flag *flag);
+int						display(char *str, t_flag *flag);
 char					*ltoa_base(t_flag *tmp, char *base);
 char					*utoa_base(t_flag *tmp, char *base);
 char					*dtoa(t_flag *tmp);
 char					*chartostr(long long c);
-char					*display_flag(char *new, t_flag *tmp);
-char					*manage_nb(t_flag *tmp);
-char					*manage_string(t_flag *tmp);
-char					*manage_char(t_flag *tmp);
+int						display_flag(char *new, t_flag *tmp);
+int						manage_nb(t_flag *tmp);
+int						manage_string(t_flag *tmp);
+int						manage_char(t_flag *tmp);
 char					*ft_bchar(char c, size_t length);
+char					*display_precision(char *, t_flag *tmp);
+char					*display_width(char *, t_flag *tmp);
 
 #endif
