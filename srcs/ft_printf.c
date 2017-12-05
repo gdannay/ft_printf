@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/21 10:02:16 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/04 14:42:28 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/05 11:08:08 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,9 +118,9 @@ int					ft_printf(char *str, ...)
 	return ((int)(ft_strlen(new)));
 }
 
-int		main()
+/*int		main()
 {
 	printf("\n%d", ft_printf("%jx", 10));
 	printf("\n");
 	printf("\n%d", printf("%jx", 10));
-}
+}*/

@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/01 10:23:15 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/04 13:46:18 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/05 11:21:09 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,24 +103,25 @@ char		*display_flag(char *new, t_flag *tmp)
 	char *tmptxt;
 
 	tmptxt = new;
-	if (tmp->hash == 1 && (tmp->type == 'o' || tmp->type == 'O') && tmp->precision == 0)
-		tmp->hash = 1;
-	else if (tmp->nb == 0 && tmp->unb == 0)
-		tmp->hash = 0;
-	if (tmp->minus == 1)
+	if ((int)ft_strlen(new) < tmp->precision && (tmp->intdisplay == 1 || tmp->intdisplay == 6))
+	{
+		new = ft_strjoin(ft_bchar('0', (size_t)tmp->precision - ft_strlen(new)), tmptxt);
 		tmp->zero = 0;
+	}	
+	if ((tmp->nb == 0 && tmp->unb == 0) && (tmp->type == 'x' || tmp->type == 'X' || (tmp->type == 'o' && tmp->precision != 0)))
+		tmp->hash = 0;
 	if (tmp->intdisplay == 6 && tmp->hash == 1 && tmp->zero == 0)
 		new = display_hash_blank(new, tmp);
 	//	free(tmptxt);
-	while ((int)ft_strlen(new) < tmp->width)
+	if ((int)ft_strlen(new) < tmp->width)
 	{
 		tmptxt = new;
 		if (tmp->minus == 1)
-			new = ft_strjoin(tmptxt, " ");
+			new = ft_strjoin(tmptxt, ft_bchar(' ', (size_t)tmp->width - ft_strlen(new)));
 		else if (tmp->zero == 1)
-			new = ft_strjoin("0", tmptxt);
+			new = ft_strjoin(ft_bchar('0', (size_t)tmp->width - ft_strlen(new)), tmptxt);
 		else
-			new = ft_strjoin(" ", tmptxt);
+			new = ft_strjoin(ft_bchar(' ', (size_t)tmp->width - ft_strlen(new)), tmptxt);
 		//		free(tmptxt);
 	}
 	if (tmp->intdisplay == 6 && tmp->hash == 1 && tmp->zero == 1)

@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/26 13:40:36 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/04 13:28:45 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/05 11:04:51 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,8 @@ static void		manage_flag(char *str, int i, t_flag **new)
 		(*new)->zero = 1;
 	if (str[i] == '#')
 		(*new)->hash = 1;
+	if ((*new)->minus == 1)
+		(*new)->zero = 0;
 }
 
 t_flag		*check_carac(char *str, int *i)

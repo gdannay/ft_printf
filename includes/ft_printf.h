@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/21 10:06:04 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/02 18:30:17 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/05 10:35:29 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,5 +72,6 @@ char					*display_flag(char *new, t_flag *tmp);
 char					*manage_nb(t_flag *tmp);
 char					*manage_string(t_flag *tmp);
 char					*manage_char(t_flag *tmp);
+char					*ft_bchar(char c, size_t length);
 
 #endif

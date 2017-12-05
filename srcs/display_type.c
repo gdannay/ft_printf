@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/02 18:22:57 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/04 14:40:19 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/05 11:22:36 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,9 @@ static char		*manage_hexa(t_flag *tmp)
 		else if (tmp->type == 'X')
 			new = ltoa_base(tmp, HEXAMAJ);
 		tmp->nb = n2 + 4294967296 * taille;
-		if (tmp->type == 'x')
+		if (tmp->nb == 0)
+			new = ft_strjoin(new, ft_bchar('0', 8));
+		else if (tmp->type == 'x')
 			new = ft_strjoin(new, ltoa_base(tmp, HEXAMIN));
 		else if (tmp->type == 'X')
 			new = ft_strjoin(new, ltoa_base(tmp, HEXAMAJ));

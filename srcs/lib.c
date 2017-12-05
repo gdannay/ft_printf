@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/21 15:24:19 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/04 11:19:50 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/05 10:31:02 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,5 +70,22 @@ char		*chartostr(long long c)
 		return (NULL);
 	new[0] = (char)c;
 	new[1] = '\0';
+	return (new);
+}
+
+char		*ft_bchar(char c, size_t length)
+{
+	size_t	i;
+	char	*new;
+	
+	i = 0;
+	if ((new = (char *)malloc(sizeof(char) * (length + 1))) == NULL)
+		return (NULL);
+	while (i < length)
+	{
+		new[i] = c;
+		i++;
+	}
+	new[i] = '\0';
 	return (new);
 }
