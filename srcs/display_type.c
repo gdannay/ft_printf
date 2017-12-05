@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/02 18:22:57 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/05 17:03:35 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/05 17:43:59 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,14 @@ static char		*manage_hexa(t_flag *tmp)
 	long long n;
 	long long n2;
 	long long taille;
+	char *t2;
 	char *tmptxt;
 
 	new = NULL;
 	n = tmp->nb;
 	n2 = tmp->nb;
 	taille = 0;
+	t2 = NULL;
 	if (tmp->nb <= -4294967296)
 	{
 		tmptxt = new;
@@ -39,13 +41,13 @@ static char		*manage_hexa(t_flag *tmp)
 			new = ltoa_base(tmp, HEXAMAJ);
 		tmp->nb = n2 + 4294967296 * taille;
 		if (tmp->nb == 0)
-			new = ft_strjoin(new, ft_bchar('0', 8));
+			new = ft_strjoin(new, t2 = ft_bchar('0', 8));
 		else if (tmp->type == 'x')
 			new = ft_strjoin(new, ltoa_base(tmp, HEXAMIN));
 		else if (tmp->type == 'X')
 			new = ft_strjoin(new, ltoa_base(tmp, HEXAMAJ));
-		if (tmptxt)
-			free(tmptxt);
+		ft_strdel(&tmptxt);
+		ft_strdel(&t2);
 	}
 	else
 	{
@@ -101,7 +103,6 @@ int		manage_string(t_flag *tmp)
 		if ((tmptxt = ft_strndup(tmp->st, (size_t)tmp->precision)) == NULL)
 			return (0);
 		length = display_flag(tmptxt, tmp);
-		free(tmptxt);
 		return (length);
 	}
 	else
@@ -128,6 +129,7 @@ int			manage_char(t_flag *tmp)
 			i++;
 		}
 		tmp->nb = 0;
+		free(new);
 	}
 	else
 		return (display_flag(chartostr(tmp->nb), tmp));

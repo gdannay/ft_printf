@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/21 10:02:16 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/05 16:01:33 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/05 17:42:03 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static void			fill_content(va_list va, t_flag *tmp)
 		else if (tmp->inttype == 1)
 			tmp->nb = va_arg(va, int);
 		else if (tmp->inttype == 2)
-			tmp->st = va_arg(va, char *);
+			tmp->st = ft_strdup(va_arg(va, char *));
 		else if (tmp->type == 'U')
 			tmp->unb = (unsigned long long)va_arg(va, unsigned long long);
 		else if (tmp->inttype == 3)
