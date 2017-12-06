@@ -1,34 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_bchar.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/09 21:40:08 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/05 17:42:42 by gdannay          ###   ########.fr       */
+/*   Created: 2017/12/06 11:00:30 by gdannay           #+#    #+#             */
+/*   Updated: 2017/12/06 11:05:39 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <string.h>
-#include <stdlib.h>
+#include "libft.h"
 
-char	*ft_strdup(const char *s)
+char		*ft_bchar(char c, size_t length)
 {
-	int		i;
+	size_t	i;
 	char	*new;
 
 	i = 0;
-	if (s == NULL)
+	if ((new = (char *)malloc(sizeof(char) * (length + 1))) == NULL)
 		return (NULL);
-	while (s[i] != '\0')
-		i++;
-	if ((new = (char *)malloc(sizeof(char) * (i + 1))) == NULL)
-		return (NULL);
-	i = 0;
-	while (s[i] != '\0')
+	while (i < length)
 	{
-		new[i] = s[i];
+		new[i] = c;
 		i++;
 	}
 	new[i] = '\0';

@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/13 14:37:27 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/01 17:17:02 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/06 11:08:31 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,5 +90,8 @@ char				*ft_lowercase(char *s);
 size_t				ft_lstsize(t_list *begin_list);
 t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 t_list				*ft_lstnew(void const *content, size_t content_size);
+char				*ft_bchar(char c, size_t length);
+char				*chartostr(long long c);
+int					length_nbr(int n);
 
 #endif

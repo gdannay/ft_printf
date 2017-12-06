@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/21 10:06:04 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/05 12:54:31 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/06 11:17:47 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,5 +75,6 @@ int						manage_char(t_flag *tmp);
 char					*ft_bchar(char c, size_t length);
 char					*display_precision(char *, t_flag *tmp);
 char					*display_width(char *, t_flag *tmp);
+char					*correction_sign(char *new, t_flag *tmp);
 
 #endif

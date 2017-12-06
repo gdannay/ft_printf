@@ -7,6 +7,7 @@ SRCS	=	./srcs/ft_printf.c		\
 			./srcs/ltoa_base.c		\
 			./srcs/display_type.c	\
 			./srcs/display_flag.c	\
+			./srcs/display_wps.c	\
 			./libft/ft_strndup.c	\
 			./libft/ft_atoi.c		\
 			./libft/ft_putstr.c		\
@@ -15,8 +16,11 @@ SRCS	=	./srcs/ft_printf.c		\
 			./libft/ft_strlen.c		\
 			./libft/ft_strdup.c		\
 			./libft/ft_strncmp.c	\
-			./libft/ft_memdel.c		\
-			./libft/ft_strsub.c
+			./libft/ft_strdel.c		\
+			./libft/ft_strsub.c		\
+			./libft/ft_chartostr.c	\
+			./libft/ft_bchar.c		\
+			./libft/ft_lennbr.c	
 
 OBJS	=	$(SRCS:.c=.o)
 

@@ -1,36 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_chartostr.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/09 21:40:08 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/05 17:42:42 by gdannay          ###   ########.fr       */
+/*   Created: 2017/12/06 11:04:37 by gdannay           #+#    #+#             */
+/*   Updated: 2017/12/06 11:06:14 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <string.h>
-#include <stdlib.h>
+#include "libft.h"
 
-char	*ft_strdup(const char *s)
+char		*chartostr(long long c)
 {
-	int		i;
-	char	*new;
+	char *new;
 
-	i = 0;
-	if (s == NULL)
+	if ((new = (char *)malloc(sizeof(char) * 2)) == NULL)
 		return (NULL);
-	while (s[i] != '\0')
-		i++;
-	if ((new = (char *)malloc(sizeof(char) * (i + 1))) == NULL)
-		return (NULL);
-	i = 0;
-	while (s[i] != '\0')
-	{
-		new[i] = s[i];
-		i++;
-	}
-	new[i] = '\0';
+	new[0] = (char)c;
+	new[1] = '\0';
 	return (new);
 }

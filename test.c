@@ -3,5 +3,5 @@
 
 int		main()
 {
-	printf("%010x", 52);
+	printf("%0000010d", 52);
 }

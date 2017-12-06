@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 15:03:31 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/05 15:40:43 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/06 16:38:12 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static int		manage_display(t_flag *tmp)
 {
 	int		length;
+	char	*c;
 
 	length = 0;
 	if (tmp->intdisplay == 1 || tmp->intdisplay == 6)
@@ -26,9 +27,13 @@ static int		manage_display(t_flag *tmp)
 	else if (tmp->intdisplay == 4)
 		length = display_flag(utoa_base(tmp, HEXAMIN), tmp);
 	else if (tmp->type == '%')
-		length = display_flag(chartostr('%'), tmp);
-//	else if (tmp->intdisplay == 5) 
-		//new = manage_db(tmp);
+	{
+		if ((c = chartostr('%')) == NULL)
+			return (0);
+		length = display_flag(c, tmp);
+	}
+	//	else if (tmp->intdisplay == 5) 
+	//new = manage_db(tmp);
 	return (length);
 }
 
@@ -45,14 +50,22 @@ int			display(char *str, t_flag *flag)
 	tmp = flag;
 	while (str && str[i] != '\0')
 	{
-		if (str[i] == '%')
+		if (str[i] == '%' && str[i + 1] && tmp->inttype != 0)
 		{
 			length += manage_display(tmp);
 			i++;
 			while (str[i + 1] && str[i] != tmp->type)
 				i++;
 			tmp = tmp->next;
-		i++;
+			i++;
+		}
+		else if (str[i] == '%' && ((!tmp) || tmp->inttype == 0))
+		{
+			i++;
+			while (str[i] && str[i] != tmp->type)
+				i++;
+			if (tmp && str[i] == tmp->type)
+				tmp = tmp->next;
 		}
 		else
 		{

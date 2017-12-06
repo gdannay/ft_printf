@@ -1,36 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_lennbr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/09 21:40:08 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/05 17:42:42 by gdannay          ###   ########.fr       */
+/*   Created: 2017/12/06 11:08:00 by gdannay           #+#    #+#             */
+/*   Updated: 2017/12/06 11:08:16 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <string.h>
-#include <stdlib.h>
-
-char	*ft_strdup(const char *s)
+int			length_nbr(int n)
 {
-	int		i;
-	char	*new;
+	int		taille;
 
-	i = 0;
-	if (s == NULL)
-		return (NULL);
-	while (s[i] != '\0')
-		i++;
-	if ((new = (char *)malloc(sizeof(char) * (i + 1))) == NULL)
-		return (NULL);
-	i = 0;
-	while (s[i] != '\0')
+	taille = 0;
+	if (n <= 0)
+		taille++;
+	while (n)
 	{
-		new[i] = s[i];
-		i++;
+		n /= 10;
+		taille++;
 	}
-	new[i] = '\0';
-	return (new);
+	return (taille);
 }

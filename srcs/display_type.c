@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/02 18:22:57 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/05 17:43:59 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/06 11:31:12 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,10 @@ int		manage_string(t_flag *tmp)
 	int length;
 
 	if (tmp->st == NULL)
-		tmp->st = ft_strdup("(null)");
+	{
+		if ((tmp->st = ft_strdup("(null)")) == NULL)
+			return (0);
+	}
 	if (tmp->precision >= 0)
 	{
 		if ((tmptxt = ft_strndup(tmp->st, (size_t)tmp->precision)) == NULL)
@@ -106,20 +109,27 @@ int		manage_string(t_flag *tmp)
 		return (length);
 	}
 	else
-		return (display_flag(tmp->st, tmp));
+	{
+		if ((tmptxt = ft_strdup(tmp->st)) == NULL)
+			return (0);
+		return (display_flag(tmptxt, tmp));
+	}
 }
 
 int			manage_char(t_flag *tmp)
 {
 	int 	i;
 	char	*new;
+	char	*c;
 
 	i = 0;
 	if (tmp->nb == 0)
 	{
 		tmp->nb = 1;
-		new = display_precision(chartostr(tmp->nb), tmp);
-		new = display_width(chartostr(tmp->nb), tmp);
+		if ((c = chartostr(tmp->nb)) == NULL
+			|| (new = display_precision(c, tmp)) == NULL
+			|| (new = display_width(c, tmp)) == NULL)
+			return (0);
 		while (new[i] != '\0')
 		{
 			if (new[i] == 1)
@@ -129,9 +139,13 @@ int			manage_char(t_flag *tmp)
 			i++;
 		}
 		tmp->nb = 0;
-		free(new);
+		ft_strdel(&new);
 	}
 	else
-		return (display_flag(chartostr(tmp->nb), tmp));
+	{
+		if ((c = chartostr(tmp->nb)) == NULL)
+			return (0);
+		return (display_flag(c, tmp));
+	}
 	return (i);
 }

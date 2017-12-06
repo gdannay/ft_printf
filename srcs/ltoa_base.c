@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 17:14:04 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/02 12:40:04 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/06 11:23:36 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,21 +84,22 @@ char			*dtoa(t_flag *tmp)
 
 	i = 0;
 	tmp->nb = (long long)tmp->ld;
-	new = ltoa_base(tmp, DECI);
+	if ((new = ltoa_base(tmp, DECI)) == NULL)
+		return (NULL);
 	tmptxt = new;
-	new = ft_strjoin(tmptxt, ".");
-	free(tmptxt);
+	if ((new = ft_strjoin(tmptxt, ".")) == NULL)
+		return (NULL);
+	ft_strdel(&tmptxt);
 	while (i < 6 || i < tmp->precision)
 	{
 		tmptxt = new;
 		tmp->ld *= 10;
 		tmp->nb = (long long)tmp->ld;
 		c = tmp->nb % 10 +'0';
-//		printf ("ld = %Lf, nb = %lld, c = %c\n", tmp->ld, tmp->nb, c);
-		new = ft_strjoin(tmptxt, &c);
-		free(tmptxt);
+		if ((new = ft_strjoin(tmptxt, &c)) == NULL)
+			return (NULL);
+		ft_strdel(&tmptxt);
 		i++;
 	}
-	printf("new = %s\n", new);
 	return (new);
 }
