@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/01 10:23:15 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/06 11:40:02 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/06 18:59:18 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static char		*display_hash_blank(char *new, t_flag *tmp)
 {
 	char *tmptxt;
 
-	if ((tmp->intdisplay == 6 || tmp->intdisplay == 4) && tmp->hash == 1 && tmp->zero == 0)
+	if (tmp->type == 'p' || (tmp->intdisplay == 6 && tmp->hash == 1 && tmp->zero == 0))
 	{
 		tmptxt = new;
 		if (tmp->type == 'x' || tmp->type == 'p')

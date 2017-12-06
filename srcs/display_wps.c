@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/06 11:13:23 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/06 14:38:14 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/06 18:46:18 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,18 @@ char			*correction_sign(char *new, t_flag *tmp)
 					return (NULL);
 				ft_strdel(&tmptxt);
 			}
+		}
+		else if (tmp->nb < 0 && new[0] == ' ')
+		{
+			while (new[i] && new[i] == ' ')
+				i++;
+			if (new[i] && new[i] == '0')
+				new[i - 1] = '-';
+			i++;
+			while (new[i] && new[i] != '-')
+				i++;
+			if (new[i])
+				new[i] = '0';
 		}
 		else if (tmp->nb >= 0 && tmp->plus == 1)
 		{

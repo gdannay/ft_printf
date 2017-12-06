@@ -3,5 +3,5 @@
 
 int		main()
 {
-	printf("%0000010d", 52);
+	printf("%Lx", -42);
 }

@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/21 10:02:16 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/06 17:12:02 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/06 19:02:37 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void			fill_unsigned(va_list va, t_flag *tmp)
 		tmp->unb = (unsigned char)va_arg(va, int);
 	else if (tmp->length == 2)
 		tmp->unb = (unsigned short)va_arg(va, int);
-	else if (tmp->length == 3)
+	else if (tmp->length == 3 || tmp->type == 'O')
 		tmp->unb = va_arg(va, unsigned long);
 	else if (tmp->length == 4)
 		tmp->unb = va_arg(va, unsigned long long);
@@ -66,7 +66,7 @@ static void			fill_int(va_list va, t_flag *tmp)
 		tmp->nb = (char)va_arg(va, int);
 	else if (tmp->length == 2)
 		tmp->nb = (short)va_arg(va, int);
-	else if (tmp->length == 3)
+	else if (tmp->length == 3 || tmp->type == 'D')
 		tmp->nb = va_arg(va, long);
 	else if (tmp->length == 4)
 		tmp->nb = va_arg(va, long long);
@@ -84,9 +84,9 @@ static void			fill_content(va_list va, t_flag *tmp)
 {
 	if (tmp->width == -2 || tmp->precision == -2)
 		fill_wp(&tmp, va_arg(va, int));
-	else if (tmp->inttype == 1 || tmp->inttype == 6)
+	if (tmp->inttype == 1 || (tmp->inttype == 6 && tmp->length == 0))
 		fill_int(va, tmp);
-	else if (tmp->inttype == 4)
+	else if (tmp->inttype == 4 || tmp->inttype == 6)
 		fill_unsigned(va, tmp);
 	else if (tmp->inttype == 2)
 		tmp->st = ft_strdup(va_arg(va, char *));
@@ -178,9 +178,12 @@ int					ft_printf(char *str, ...)
 	while (1);
 	return (0);
 }*/
-/*int		main()
+
+#include "limits.h"
+
+int		main()
 {
- 	printf("\n%d", ft_printf("% Zoooo"));
+ 	printf("\n%d", ft_printf("%9.2p", 1234));
 	printf("\n");
-//	printf("\n%d", printf("% Zoooo"));
-}*/
+ 	printf("\n%d", printf("%9.2p", 1234));
+}

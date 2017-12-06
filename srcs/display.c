@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 15:03:31 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/06 16:38:12 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/06 18:32:36 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ static int		manage_display(t_flag *tmp)
 		length = manage_char(tmp);
 	else if (tmp->intdisplay == 3)
 		length = manage_string(tmp);
-	else if (tmp->intdisplay == 4)
-		length = display_flag(utoa_base(tmp, HEXAMIN), tmp);
+//	else if (tmp->intdisplay == 4)
+//		length = display_flag(utoa_base(tmp, HEXAMIN), tmp);
 	else if (tmp->type == '%')
 	{
 		if ((c = chartostr('%')) == NULL)
