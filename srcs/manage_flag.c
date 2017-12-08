@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/26 13:40:36 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/06 18:32:27 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/08 17:18:18 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ static t_type	typeconv[] =
 	{'D', 1, 1},
 	{'i', 1, 1},
 	{'c', 1, 2},
-	{'C', 1, 2},
+	{'C', 8, 8},
 	{'s', 2, 3},
-	{'S', 2, 3},
+	{'S', 9, 9},
 	{'p', 3, 6},
 	{'o', 4, 6},
 	{'O', 4, 6},
@@ -36,7 +36,7 @@ static t_type	typeconv[] =
 	{'G', 5, 5},
 	{'a', 5, 5},
 	{'A', 5, 5},
-	{'%', 6, 7},
+	{'%', 7, 7},
 };
 
 static int	check_length(t_flag *new, char *str, int *i)
@@ -126,7 +126,7 @@ void		check(char *str, int *i, t_flag **new)
 			|| str[*i] == '+' || str[*i] == '-')
 	{
 		if (str[*i] == '.')
-			*i = *i + 1;
+			check_wp(str, i, *new);
 		else
 			manage_flag(str, i, new);
 	}
@@ -159,8 +159,13 @@ t_flag		*check_carac(char *str, int *i)
 		new->inttype = typeconv[j].conv;			
 		new->intdisplay = typeconv[j].display;
 	}
+	else if (new->type != 0)
+	{
+		new->inttype = 10;
+		new->intdisplay = 2;
+		new->nb = (long long)new->type;
+	}
 	else
 		new->inttype = 0;
-//	printf("TEST = %c et %d\n", new->type, new->inttype);
 	return (new);
 }

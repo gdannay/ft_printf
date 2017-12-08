@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/21 15:24:19 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/06 15:17:51 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/08 16:35:44 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ t_flag		*create_flag(void)
 	new->vd = NULL;
 	new->st = NULL;
 	new->next = NULL;
+	new->wst = NULL;
 	new->order = 0;
 	return (new);
 }

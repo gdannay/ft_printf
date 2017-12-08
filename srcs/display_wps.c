@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/06 11:13:23 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/06 18:46:18 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/08 14:30:03 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,10 @@ char			*display_precision(char *new, t_flag *tmp)
 	char *tmptxt;
 	char *t2;
 
+	if (tmp->nb < 0 && tmp->precision > 0)
+		tmp->precision = tmp->precision + 1;
+	if (tmp->precision >= 0)
+		tmp->zero = 0;
 	if ((int)ft_strlen(new) < tmp->precision && (tmp->intdisplay == 1 || tmp->intdisplay == 6))
 	{
 		tmptxt = new;
@@ -24,7 +28,6 @@ char			*display_precision(char *new, t_flag *tmp)
 			return (NULL);
 		if ((new = ft_strjoin(t2, tmptxt)) == NULL)
 			return (NULL);
-		tmp->zero = 0;
 		ft_strdel(&t2);
 		ft_strdel(&tmptxt);
 	}
@@ -36,6 +39,8 @@ char			*display_width(char *new, t_flag *tmp)
 	char *tmptxt;
 	char *t2;
 
+	if (tmp->space == 1 && tmp->plus == 0)
+		tmp->width = tmp->width - 1;
 	if ((int)ft_strlen(new) < tmp->width)
 	{
 		tmptxt = new;
@@ -94,7 +99,7 @@ char			*correction_sign(char *new, t_flag *tmp)
 			while (new[i] && new[i] == '0')
 				i++;
 			new[i] = '0';
-			if (tmp->zero == 1)
+			if (tmp->zero == 1 || (int)ft_strlen(new) == tmp->precision)
 				new[0] = '-';
 			else
 			{
@@ -108,7 +113,7 @@ char			*correction_sign(char *new, t_flag *tmp)
 			while (new[i] && new[i] == ' ')
 				i++;
 			if (new[i] && new[i] == '0')
-				new[i - 1] = '-';
+				new[i] = '-';
 			i++;
 			while (new[i] && new[i] != '-')
 				i++;
@@ -120,7 +125,7 @@ char			*correction_sign(char *new, t_flag *tmp)
 			if ((new = display_plus(new, tmp)) == NULL)
 				return (NULL);
 		}
-		else if (tmp->space == 1 && tmp->nb >= 0 && tmp->width < (int)ft_strlen(new))
+		else if (tmp->space == 1 && tmp->nb >= 0 && tmp->width <= (int)ft_strlen(new))
 		{
 			if ((new = ft_strjoin(" ", tmptxt)) == NULL)
 				return (NULL);

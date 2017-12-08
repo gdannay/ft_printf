@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/21 10:02:16 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/06 19:02:37 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/08 17:54:00 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,13 @@ static void			fill_unsigned(va_list va, t_flag *tmp)
 {
 	if (tmp->type == 'U')
 		tmp->unb = (unsigned long long)va_arg(va, unsigned long long);
+	else if (tmp->type == 'O')
+		tmp->unb = va_arg(va, unsigned long);
 	else if (tmp->length == 1)
-		tmp->unb = (unsigned char)va_arg(va, int);
+		tmp->nb = (unsigned char)va_arg(va, int);
 	else if (tmp->length == 2)
 		tmp->unb = (unsigned short)va_arg(va, int);
-	else if (tmp->length == 3 || tmp->type == 'O')
+	else if (tmp->length == 3)
 		tmp->unb = va_arg(va, unsigned long);
 	else if (tmp->length == 4)
 		tmp->unb = va_arg(va, unsigned long long);
@@ -94,6 +96,10 @@ static void			fill_content(va_list va, t_flag *tmp)
 		tmp->unb = (unsigned long long)va_arg(va, void *);
 	else if (tmp->inttype == 5)
 		tmp->db = va_arg(va, double);
+	else if (tmp->inttype == 8)
+		tmp->nb = va_arg(va, wchar_t);
+	else if (tmp->inttype == 9)
+		tmp->wst = va_arg(va, wchar_t *);
 }
 
 void				free_lst(t_flag **flag)
@@ -144,46 +150,53 @@ int					ft_printf(char *str, ...)
 }
 
 /*int main(void)
-{
-	ft_printf("\n");
-	ft_printf("%%\n");
-	ft_printf("%d\n", 42);
-	ft_printf("%d%d\n", 42, 41);
-	ft_printf("%d%d%d\n", 42, 43, 44);
-	ft_printf("%ld\n", 2147483647);
-	ft_printf("%lld\n", 9223372036854775807);
-	ft_printf("%x\n", 505);
-	ft_printf("%X\n", 505);
-	ft_printf("%p\n", &ft_printf);
-	ft_printf("%20.15d\n", 54321);
-	ft_printf("%-10d\n", 3);
-	ft_printf("% d\n", 3);
-	ft_printf("%+d\n", 3);
-	ft_printf("%010d\n", 1);
-	ft_printf("%hhd\n", 0);
-	ft_printf("%jd\n", 9223372036854775807);
-	ft_printf("%zd\n", 4294967295);
-	ft_printf("%\n");
-	ft_printf("%U\n", 4294967295);
-	ft_printf("%u\n", 4294967295);
-	ft_printf("%o\n", 40);
-	ft_printf("%%#08x\n", 42);
-	ft_printf("%x\n", 1000);
-	ft_printf("%#X\n", 1000);
-	ft_printf("%s\n", NULL);
-	ft_printf("%S\n", L"ݗݜशব");
-	ft_printf("%s%s\n", "test", "test");
-	ft_printf("%s%s%s\n", "test", "test", "test");
-	ft_printf("%C\n", 15000);
-	while (1);
-	return (0);
-}*/
+  {
+  ft_printf("\n");
+  ft_printf("%%\n");
+  ft_printf("%d\n", 42);
+  ft_printf("%d%d\n", 42, 41);
+  ft_printf("%d%d%d\n", 42, 43, 44);
+  ft_printf("%ld\n", 2147483647);
+  ft_printf("%lld\n", 9223372036854775807);
+  ft_printf("%x\n", 505);
+  ft_printf("%X\n", 505);
+  ft_printf("%p\n", &ft_printf);
+  ft_printf("%20.15d\n", 54321);
+  ft_printf("%-10d\n", 3);
+  ft_printf("% d\n", 3);
+  ft_printf("%+d\n", 3);
+  ft_printf("%010d\n", 1);
+  ft_printf("%hhd\n", 0);
+  ft_printf("%jd\n", 9223372036854775807);
+  ft_printf("%zd\n", 4294967295);
+  ft_printf("%\n");
+  ft_printf("%U\n", 4294967295);
+  ft_printf("%u\n", 4294967295);
+  ft_printf("%o\n", 40);
+  ft_printf("%%#08x\n", 42);
+  ft_printf("%x\n", 1000);
+  ft_printf("%#X\n", 1000);
+  ft_printf("%s\n", NULL);
+  ft_printf("%s%s\n", "test", "test");
+  ft_printf("%s%s%s\n", "test", "test", "test");
+  ft_printf("%C\n", 15000);
+  while (1);
+  return (0);
+  }*/
 
 #include "limits.h"
 
-int		main()
+#include <locale.h>
+
+/*int		main()
 {
- 	printf("\n%d", ft_printf("%9.2p", 1234));
+	char* l = setlocale(LC_ALL, "");
+//	if (l == NULL) {
+//		printf("Locale not set\n");
+//	} else {
+//		printf("Locale set to %s\n", l);
+//	}
+	printf("\n%d", ft_printf("%hhO, %hhO", 0, ULLONG_MAX));
 	printf("\n");
- 	printf("\n%d", printf("%9.2p", 1234));
-}
+	printf("\n%d", printf("%hhO, %hhO", 0, ULLONG_MAX));
+}*/

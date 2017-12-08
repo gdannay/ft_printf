@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/01 10:23:15 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/06 18:59:18 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/08 11:03:06 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int				display_flag(char *new, t_flag *tmp)
 {
 	int		length;
 
-	if (tmp->precision != 0 && (new = display_precision(new, tmp)) == NULL)
+	if ((new = display_precision(new, tmp)) == NULL && tmp->precision != 0)
 		return (0);
 	if ((tmp->nb == 0 && tmp->unb == 0) && (tmp->type == 'x' 
 				|| tmp->type == 'X' || (tmp->type == 'o' && tmp->precision != 0)))

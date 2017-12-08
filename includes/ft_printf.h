@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/21 10:06:04 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/06 11:17:47 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/08 16:36:13 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdio.h>
 # include <inttypes.h>
 # include "../libft/libft.h"
+# include <wchar.h>
 
 # define BINA "01"
 # define DECI "0123456789"
@@ -48,6 +49,7 @@ typedef struct			s_flag
 	void				*vd;
 	char				*st;
 	int					order;
+	wchar_t				*wst;
 	struct s_flag		*next;
 }						t_flag;
 

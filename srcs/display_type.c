@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/02 18:22:57 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/06 19:01:48 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/08 17:51:57 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int			manage_nb(t_flag *tmp)
 		new = utoa_base(tmp, HEXAMAJ);
 	else if (tmp->type == 'p')
 		new = utoa_base(tmp, HEXAMIN);
-	else if (tmp->type == 'u' || tmp->type == 'U')
+	else if (tmp->type == 'u' || tmp->type == 'U' || tmp->type == 'D')
 		new = utoa_base(tmp, DECI);
 	else if (tmp->type == 'o' || tmp->type == 'O')
 		new = utoa_base(tmp, OCTA);
