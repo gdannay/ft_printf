@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/26 13:40:36 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/08 17:18:18 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/08 18:03:51 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,5 +167,15 @@ t_flag		*check_carac(char *str, int *i)
 	}
 	else
 		new->inttype = 0;
+	if (new->type == 'c' && new->length == 3)
+	{
+		new->inttype = 8;
+		new->intdisplay = 8;
+	}
+	if (new->type == 's' && new->length == 3)
+	{
+		new->inttype = 9;
+		new->intdisplay = 9;
+	}
 	return (new);
 }

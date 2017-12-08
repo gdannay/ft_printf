@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/21 10:02:16 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/08 17:54:00 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/08 18:11:56 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static void			fill_unsigned(va_list va, t_flag *tmp)
 	else if (tmp->type == 'O')
 		tmp->unb = va_arg(va, unsigned long);
 	else if (tmp->length == 1)
-		tmp->nb = (unsigned char)va_arg(va, int);
+		tmp->unb = (unsigned char)va_arg(va, int);
 	else if (tmp->length == 2)
 		tmp->unb = (unsigned short)va_arg(va, int);
 	else if (tmp->length == 3)
@@ -64,11 +64,13 @@ static void			fill_unsigned(va_list va, t_flag *tmp)
 
 static void			fill_int(va_list va, t_flag *tmp)
 {
-	if (tmp->length == 1)
+	if (tmp->type == 'D')
+		tmp->nb = va_arg(va, long);
+	else if (tmp->length == 1)
 		tmp->nb = (char)va_arg(va, int);
 	else if (tmp->length == 2)
 		tmp->nb = (short)va_arg(va, int);
-	else if (tmp->length == 3 || tmp->type == 'D')
+	else if (tmp->length == 3)
 		tmp->nb = va_arg(va, long);
 	else if (tmp->length == 4)
 		tmp->nb = va_arg(va, long long);
@@ -196,7 +198,7 @@ int					ft_printf(char *str, ...)
 //	} else {
 //		printf("Locale set to %s\n", l);
 //	}
-	printf("\n%d", ft_printf("%hhO, %hhO", 0, ULLONG_MAX));
+	printf("\n%d", ft_printf("%hhu, %hhu", 0, UCHAR_MAX));
 	printf("\n");
-	printf("\n%d", printf("%hhO, %hhO", 0, ULLONG_MAX));
+	printf("\n%d", printf("%hhu, %hhu", 0, UCHAR_MAX));
 }*/
