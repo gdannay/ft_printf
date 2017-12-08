@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/21 10:02:16 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/08 18:11:56 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/08 18:17:25 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ static void			fill_unsigned(va_list va, t_flag *tmp)
 		tmp->unb = va_arg(va, unsigned long);
 	else if (tmp->length == 4)
 		tmp->unb = va_arg(va, unsigned long long);
+	else if (tmp->length == 6)
+		tmp->unb = va_arg(va, size_t);
 	else if (tmp->length == 7)
 		tmp->unb = va_arg(va, intmax_t);
 	else
@@ -198,7 +200,7 @@ int					ft_printf(char *str, ...)
 //	} else {
 //		printf("Locale set to %s\n", l);
 //	}
-	printf("\n%d", ft_printf("%hhu, %hhu", 0, UCHAR_MAX));
+	printf("\n%d", ft_printf("%zu, %zu", 0, ULLONG_MAX));
 	printf("\n");
-	printf("\n%d", printf("%hhu, %hhu", 0, UCHAR_MAX));
+	printf("\n%d", printf("%zu, %zu", 0, ULLONG_MAX));
 }*/
