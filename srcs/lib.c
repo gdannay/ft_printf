@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/21 15:24:19 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/09 18:52:00 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/09 19:14:21 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,16 @@ void		fill_wp(t_flag *tmp, va_list va)
 	if (tmp->width == -2)
 	{
 		tmp->width = va_arg(va, int);
+		if (tmp->width < 0)
+		{
+			tmp->minus = 1;
+			tmp->width *= -1;
+		}
+	}
+	if (tmp->width == -3)
+	{
+		va_arg(va, int);
+		tmp->width = tmp->nb;
 		if (tmp->width < 0)
 		{
 			tmp->minus = 1;

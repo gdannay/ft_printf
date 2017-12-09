@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 17:14:04 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/06 11:23:36 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/09 19:33:48 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ char			*utoa_base(t_flag *tmp, char *base)
 	new[taille] = '\0';
 	return (new);
 }
+
 char			*dtoa(t_flag *tmp)
 {
 	char	*new;

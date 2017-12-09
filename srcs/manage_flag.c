@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/26 13:40:36 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/09 18:47:34 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/09 19:22:47 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,17 +68,31 @@ static int	check_length(t_flag *new, char *str, int *i)
 	return (1);
 }
 
-static void		check_wp(char *str, int *i, t_flag *new)
+static int		check_wp(char *str, int *i, t_flag *new)
 {
+	int ret;
+
+	ret = 0;
 	if (str[*i] > '0' && str[*i] <= '9')
 	{
-		new->width = ft_atoi(str + *i);
-		*i = *i + length_nbr(new->width);
+		if (new->width == -2)
+		{
+			new->width = -3;
+			new->nb = ft_atoi(str + *i);
+			*i = *i + length_nbr(new->nb);
+		}
+		else
+		{
+			new->width = ft_atoi(str + *i);
+			*i = *i + length_nbr(new->width);
+		}
+		ret = 1;
 	}
 	if (str[*i] == '*')
 	{
 		new->width = -2;
 		*i = *i + 1;
+		ret = 1;
 	}
 	if (str[*i] == '.')
 	{
@@ -96,7 +110,9 @@ static void		check_wp(char *str, int *i, t_flag *new)
 		}
 		else
 			new->precision = 0;
+		ret = 1;
 	}
+	return (ret);
 }
 
 static void		manage_flag(char *str, int *i, t_flag **new)
@@ -147,9 +163,8 @@ t_flag		*check_carac(char *str, int *i)
 		}
 		}*/
 	manage_flag(str, i, &new);
-	check_wp(str, i, new);
+	while(check_wp(str, i, new));
 	while (check_length(new, str, i));
-	check(str, i, &new);
 	new->type = str[*i];
 	while (new->type != typeconv[j].type && j < 22)
 		j++;
