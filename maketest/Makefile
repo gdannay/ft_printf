@@ -6,7 +6,7 @@
 #    By: gdannay <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/21 10:47:14 by gdannay           #+#    #+#              #
-#    Updated: 2017/12/06 18:30:32 by gdannay          ###   ########.fr        #
+#    Updated: 2017/12/09 11:57:19 by gdannay          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@ NAME	=	printf
 SRCS	=	./srcs/ft_printf.c		\
 			./srcs/lib.c			\
 			./srcs/manage_flag.c	\
+			./srcs/display_uni.c		\
 			./srcs/display.c		\
 			./srcs/ltoa_base.c		\
 			./srcs/display_flag.c	\

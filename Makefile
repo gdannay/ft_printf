@@ -8,6 +8,7 @@ SRCS	=	./srcs/ft_printf.c		\
 			./srcs/display_type.c	\
 			./srcs/display_flag.c	\
 			./srcs/display_wps.c	\
+			./srcs/display_uni.c	\
 			./libft/ft_strndup.c	\
 			./libft/ft_atoi.c		\
 			./libft/ft_putstr.c		\

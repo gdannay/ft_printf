@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/06 11:13:23 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/08 14:30:03 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/09 16:45:32 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char			*display_precision(char *new, t_flag *tmp)
 
 	if (tmp->nb < 0 && tmp->precision > 0)
 		tmp->precision = tmp->precision + 1;
-	if (tmp->precision >= 0)
+	if (tmp->precision >= 0 && tmp->type != 'c' && tmp->type != 'C' && tmp->type != 'S' && tmp->type != 's')
 		tmp->zero = 0;
 	if ((int)ft_strlen(new) < tmp->precision && (tmp->intdisplay == 1 || tmp->intdisplay == 6))
 	{
@@ -39,13 +39,15 @@ char			*display_width(char *new, t_flag *tmp)
 	char *tmptxt;
 	char *t2;
 
-	if (tmp->space == 1 && tmp->plus == 0)
+	if (tmp->space == 1 && tmp->plus == 0 && tmp->type != 'c' && tmp->type != 'C' && tmp->type != 's' && tmp->type != 'S')
 		tmp->width = tmp->width - 1;
 	if ((int)ft_strlen(new) < tmp->width)
 	{
 		tmptxt = new;
 		if (tmp->minus == 1)
 			new = ft_strjoin(tmptxt, t2 = ft_bchar(' ', (size_t)tmp->width - ft_strlen(new)));
+		else if (tmp->zero == 1 && tmp->type == 'p')
+			new = ft_strjoin(tmptxt, t2 = ft_bchar('0', (size_t)tmp->width - ft_strlen(new)));
 		else if (tmp->zero == 1)
 			new = ft_strjoin(t2 = ft_bchar('0', (size_t)tmp->width - ft_strlen(new)), tmptxt);
 		else

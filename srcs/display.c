@@ -6,109 +6,96 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 15:03:31 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/08 18:40:37 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/09 16:27:14 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-long long		atoi_base(char *str, char *input_b)
+size_t		ft_wstrlen(wchar_t *str)
 {
-	int i;
-	int neg;
-	long long n;
+	size_t i;
 
 	i = 0;
-	neg = 0;
-	n = 0;
-	if (str[i] == '-')
-	{
+	while (str[i] != '\0')
 		i++;
-		neg = 1;
-	}
-	while (str[i] >= '0' && str[i] <= '9')
-	{
-		n = n * ft_strlen(input_b) - (str[i] - '0');
-		i++;
-	}
-	if (neg)
-		return (n);
-	return (-n);
+	return (i);
 }
 
-char			*mask_uni(char *output, char *bin)
+int		manage_wstring(t_flag *tmp)
 {
+	char *tmptxt;
+	char *new;
+	int length;
 	int i;
 	int j;
+	int rep;
+	int prec;
 
-	i = 7;
-	j = (int)ft_strlen(bin) - 1;
-	while (output[i] == 'x' && j >= 0)
-	{
-		output[i] = bin[j];
-		i--;
-		j--;
-	}
-	while (output[i] == 'x')
-	{
-		output[i] = '0';
-		i--;
-	}
-	bin[j + 1] = '\0';
-	return (output);
-}
-
-void			ft_putuni(char *c, int rep)
-{
-	int i;
-	long long n[4];
-	char *mask;
-	char *nbtmp;
-	
 	i = 0;
-	while (i < rep)
+	j = 0;
+	length = 0;
+	rep = 0;
+	prec = 0;
+	if (tmp->wst == NULL)
 	{
-		mask = ft_strdup("10xxxxxx");
-		nbtmp = mask_uni(mask, c);
-		n[i] = atoi_base(nbtmp, BINA);
-		ft_strdel(&mask);
+		if ((tmptxt = ft_strdup("(null)")) == NULL)
+			return (0);
+		return (display_flag(tmptxt, tmp));
+	}
+	if (tmp->precision == 0)
+		return (display_flag(NULL, tmp));
+	else if (tmp->precision > 0)
+	{
+		while (tmp->wst[prec] && rep <= tmp->precision)
+		{
+			tmp->nb = tmp->wst[prec];
+			rep += compute_rep(ltoa_base(tmp, BINA));
+			prec++;
+		}
+		if (rep > tmp->precision)
+		{
+			if ((tmptxt = ft_bchar(1, (size_t)prec - 1)) == NULL)
+			return (0);
+		}
+		else
+		{
+			if ((tmptxt = ft_bchar(1, (size_t)prec)) == NULL)
+				return (0);
+		}
+	}
+	else
+	{
+		if ((tmptxt = ft_bchar(1, ft_wstrlen(tmp->wst))) == NULL)
+			return (0);
+	}
+	rep = 0;
+	while (tmptxt[i] && tmp->wst[i] != '\0')
+	{
+		tmp->nb = tmp->wst[i];
+		rep += compute_rep(ltoa_base(tmp, BINA)) - 1;
 		i++;
 	}
-	if (rep == 1)
-		mask = ft_strdup("110xxxxx");
-	if (rep == 2)
-		mask = ft_strdup("1110xxxx");
-	if (rep == 3)
-		mask = ft_strdup("11110xxx");
-	nbtmp = mask_uni(mask, c);
-	n[i] = atoi_base(nbtmp, BINA);
-	if (rep > 2)
-		write(1, &(n[3]), 1);
-	if (rep > 1)
-		write(1, &(n[2]), 1);
-	write(1, &(n[1]), 1);
-	write(1, &(n[0]), 1);
-}
-
-static int	display_uni(t_flag *tmp)
-{
-	char *c;
-	int rep;
-
-	c = ltoa_base(tmp, BINA);
-	if (ft_strlen(c) <= 7)
+	tmp->width -= rep;
+	if ((new = display_width(tmptxt, tmp)) == NULL)
+		return (0);
+	i = 0;
+	while (new[i] != '\0')
 	{
-		write(1, &(tmp->nb), 1);
-		return (1);
+		if (new[i] == 1)
+		{
+			tmp->nb = (long long)tmp->wst[j];
+			length += manage_uni(tmp);
+			j++;
+		}
+		else
+		{
+			ft_putchar(new[i]);
+			length++;
+		}
+		i++;
 	}
-	else if (ft_strlen(c) <= 11)
-		rep = 1;
-	else if (ft_strlen(c) <= 16)
-		rep = 2;
-	else
-		rep = 3;
-	ft_putuni(c, rep);
-	return (rep + 1); 
+	return (length);
 }
 
 static int		manage_display(t_flag *tmp)
@@ -124,18 +111,9 @@ static int		manage_display(t_flag *tmp)
 	else if (tmp->intdisplay == 2)
 		length = manage_char(tmp);
 	else if (tmp->intdisplay == 9)
-	{
-		if (tmp->wst == NULL)
-			return (manage_string(tmp));
-		while (tmp->wst[i] != '\0')
-		{
-			tmp->nb = tmp->wst[i];
-			length += display_uni(tmp);
-			i++;
-		}
-	}
+		length = manage_wstring(tmp);
 	else if (tmp->intdisplay == 8) 
-		length = display_uni(tmp);
+		length = manage_uni(tmp);
 	else if (tmp->intdisplay == 2 || tmp->intdisplay == 9) 
 		length = manage_char(tmp);
 	else if (tmp->intdisplay == 3)
