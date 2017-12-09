@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/06 11:13:23 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/09 16:45:32 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/09 18:52:13 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char			*display_precision(char *new, t_flag *tmp)
 
 	if (tmp->nb < 0 && tmp->precision > 0)
 		tmp->precision = tmp->precision + 1;
-	if (tmp->precision >= 0 && tmp->type != 'c' && tmp->type != 'C' && tmp->type != 'S' && tmp->type != 's')
+	if (tmp->precision >= 0 && (tmp->intdisplay == 1 || tmp->intdisplay == 6))
 		tmp->zero = 0;
 	if ((int)ft_strlen(new) < tmp->precision && (tmp->intdisplay == 1 || tmp->intdisplay == 6))
 	{
@@ -39,7 +39,7 @@ char			*display_width(char *new, t_flag *tmp)
 	char *tmptxt;
 	char *t2;
 
-	if (tmp->space == 1 && tmp->plus == 0 && tmp->type != 'c' && tmp->type != 'C' && tmp->type != 's' && tmp->type != 'S')
+	if (tmp->space == 1 && tmp->plus == 0 && (tmp->intdisplay == 1 || tmp->intdisplay == 6))
 		tmp->width = tmp->width - 1;
 	if ((int)ft_strlen(new) < tmp->width)
 	{

@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/01 10:23:15 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/09 16:44:05 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/09 18:50:26 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,12 @@ static char		*display_hash_blank(char *new, t_flag *tmp)
 			new = ft_strjoin("0x", new);
 		else if (tmp->type == 'X')
 			new = ft_strjoin("0X", new);
-		else if (tmp->type == 'o' || tmp->type == 'O')
+		else if ((tmp->type == 'o' || tmp->type == 'O') && ((int)ft_strlen(new) < tmp->precision || tmp->precision <= 0))
 			new = ft_strjoin("0", new);
 		if (new == NULL)
 			return (NULL);
-		ft_strdel(&tmptxt);
+		if (new != tmptxt)
+			ft_strdel(&tmptxt);
 	}
 	return (new);
 }

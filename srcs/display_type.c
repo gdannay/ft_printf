@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/02 18:22:57 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/09 15:36:30 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/09 18:49:11 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ static char		*manage_hexa(t_flag *tmp)
 int			manage_nb(t_flag *tmp)
 {
 	char	*new;
-	int		length;
 
 	new = NULL;
 	if (tmp->inttype == 6 && tmp->nb < 0)
@@ -89,12 +88,8 @@ int			manage_nb(t_flag *tmp)
 	if (new == NULL)
 		return (0);
 	if (tmp->precision == 0 && ft_strncmp(new, "0", 1) == 0)
-	{
-		free(new);
-		new = NULL;
-	}
-	length = display_flag(new, tmp);
-	return (length);
+		ft_strdel(&new);
+	return (display_flag(new, tmp));
 }
 
 int		manage_string(t_flag *tmp)

@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 15:03:31 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/09 16:27:14 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/09 18:50:19 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,11 +101,8 @@ int		manage_wstring(t_flag *tmp)
 static int		manage_display(t_flag *tmp)
 {
 	int		length;
-	char	*c;
-	int i;
 
 	length = 0;
-	i = 0;
 	if (tmp->intdisplay == 1 || tmp->intdisplay == 6)
 		length = manage_nb(tmp);
 	else if (tmp->intdisplay == 2)
@@ -120,12 +117,6 @@ static int		manage_display(t_flag *tmp)
 		length = manage_string(tmp);
 	//	else if (tmp->intdisplay == 4)
 	//		length = display_flag(utoa_base(tmp, HEXAMIN), tmp);
-	else if (tmp->type == '%')
-	{
-		if ((c = chartostr('%')) == NULL)
-			return (0);
-		length = display_flag(c, tmp);
-	}
 	//	else if (tmp->intdisplay == 5) 
 	//new = manage_db(tmp);
 	return (length);

@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/26 13:40:36 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/09 15:48:16 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/09 18:47:34 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ static t_type	typeconv[] =
 	{'G', 5, 5},
 	{'a', 5, 5},
 	{'A', 5, 5},
-	{'%', 7, 7},
 };
 
 static int	check_length(t_flag *new, char *str, int *i)
@@ -76,7 +75,7 @@ static void		check_wp(char *str, int *i, t_flag *new)
 		new->width = ft_atoi(str + *i);
 		*i = *i + length_nbr(new->width);
 	}
-	else if (str[*i] == '*')
+	if (str[*i] == '*')
 	{
 		new->width = -2;
 		*i = *i + 1;
@@ -152,9 +151,9 @@ t_flag		*check_carac(char *str, int *i)
 	while (check_length(new, str, i));
 	check(str, i, &new);
 	new->type = str[*i];
-	while (new->type != typeconv[j].type && j < 23)
+	while (new->type != typeconv[j].type && j < 22)
 		j++;
-	if (j < 23)
+	if (j < 22)
 	{
 		new->inttype = typeconv[j].conv;			
 		new->intdisplay = typeconv[j].display;

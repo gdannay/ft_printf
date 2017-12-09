@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/21 15:24:19 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/08 16:35:44 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/09 18:52:00 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,17 @@ t_flag		*create_flag(void)
 	return (new);
 }
 
-void		fill_wp(t_flag **tmp, int n)
+void		fill_wp(t_flag *tmp, va_list va)
 {
-	if ((*tmp)->width == -2)
-		(*tmp)->width = n;
-	if ((*tmp)->precision == -2)
-		(*tmp)->precision = n;
+	if (tmp->width == -2)
+	{
+		tmp->width = va_arg(va, int);
+		if (tmp->width < 0)
+		{
+			tmp->minus = 1;
+			tmp->width *= -1;
+		}
+	}
+	if (tmp->precision == -2)
+		tmp->precision = va_arg(va, int);
 }

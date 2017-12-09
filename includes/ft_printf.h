@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/21 10:06:04 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/09 12:39:53 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/09 18:22:20 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int						ft_printf(char *str, ...);
 t_flag					*create_flag(void);
 int						length_nbr(int n);
 t_flag					*check_carac(char *str, int *i);
-void					fill_wp(t_flag **tmp, int n);
+void					fill_wp(t_flag *tmp, va_list va);
 int						display(char *str, t_flag *flag);
 char					*ltoa_base(t_flag *tmp, char *base);
 char					*utoa_base(t_flag *tmp, char *base);

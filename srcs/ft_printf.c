@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/21 10:02:16 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/09 16:42:45 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/09 18:52:48 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ static void			fill_int(va_list va, t_flag *tmp)
 static void			fill_content(va_list va, t_flag *tmp)
 {
 	if (tmp->width == -2 || tmp->precision == -2)
-		fill_wp(&tmp, va_arg(va, int));
+		fill_wp(tmp, va);
 	if (tmp->inttype == 1 || (tmp->inttype == 6 && tmp->length == 0))
 		fill_int(va, tmp);
 	else if (tmp->inttype == 4 || tmp->inttype == 6)
@@ -200,8 +200,8 @@ int					ft_printf(char *str, ...)
 //	} else {
 //		printf("Locale set to %s\n", l);
 //	}
-	printf("\n%d", ft_printf("%#.3o", 1));
+	printf("\n%d", ft_printf("{%.*s}", 0, "    42"));
 	printf("\n");
-	printf("\n%d", printf("%#.3o", 1));
+	printf("\n%d", printf("{%.*s}", 0, "42"));
 
 }*/

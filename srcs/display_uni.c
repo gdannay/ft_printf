@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 11:14:17 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/09 15:25:25 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/09 17:43:05 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,14 +63,13 @@ void			ft_putuni(char *c, int rep)
 	int i;
 	long long n[4];
 	char *mask;
-	char *nbtmp;
 
 	i = 0;
 	while (i < rep - 1)
 	{
 		mask = ft_strdup("10xxxxxx");
-		nbtmp = mask_uni(mask, c);
-		n[i] = atoi_base(nbtmp, BINA);
+		mask = mask_uni(mask, c);
+		n[i] = atoi_base(mask, BINA);
 		ft_strdel(&mask);
 		i++;
 	}
@@ -80,8 +79,9 @@ void			ft_putuni(char *c, int rep)
 		mask = ft_strdup("1110xxxx");
 	if (rep == 4)
 		mask = ft_strdup("11110xxx");
-	nbtmp = mask_uni(mask, c);
-	n[i] = atoi_base(nbtmp, BINA);
+	mask = mask_uni(mask, c);
+	n[i] = atoi_base(mask, BINA);
+	ft_strdel(&mask);
 	if (rep > 3)
 		write(1, &(n[3]), 1);
 	if (rep > 2)
@@ -114,7 +114,10 @@ int		manage_uni(t_flag *tmp)
 	i = 0;
 	rep = compute_rep(c);
 	if (tmp->intdisplay == 8 && rep == 1)
+	{
+		ft_strdel(&c);
 		return (manage_char(tmp));
+	}
 	else if (tmp->intdisplay == 9 && rep == 1)
 		write(1, &(tmp->nb), 1);
 	else if (tmp->type == 'C' && (tmp->precision >= 0 || tmp->width >= 0))
@@ -132,9 +135,11 @@ int		manage_uni(t_flag *tmp)
 				ft_putchar(new[i]);
 			i++;
 		}
+		ft_strdel(&c2);
+		ft_strdel(&new);
 	}
 	else
 		ft_putuni(c, rep);
-//	ft_strdel(&new);
+	ft_strdel(&c);
 	return (rep);
 }
