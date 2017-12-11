@@ -6,13 +6,13 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/26 13:40:36 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/09 19:22:47 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/11 10:36:46 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static t_type	typeconv[] =
+static t_type	g_typeconv[] =
 {
 	{'d', 1, 1},
 	{'D', 1, 1},
@@ -38,61 +38,42 @@ static t_type	typeconv[] =
 	{'A', 5, 5},
 };
 
-static int	check_length(t_flag *new, char *str, int *i)
+static void		check_length(t_flag *new, char *str, int *i)
 {
-	if (str[*i] == 'h' && str[*i + 1] == 'h')
+	while (str[*i] == 'h' || str[*i] == 'l' || str[*i] == 'z'
+			|| str[*i] == 'j' || str[*i] == 't')
 	{
+		if (str[*i] == 'h' && str[*i + 1] == 'h')
+		{
+			*i = *i + 1;
+			new->length = new->length < 1 ? 1 : new->length;
+		}
+		else if (str[*i] == 'h')
+			new->length = new->length < 2 ? 2 : new->length;
+		else if (str[*i] == 'l')
+			new->length = new->length < 3 ? 3 : new->length;
+		else if (str[*i] == 'l' && str[*i + 1] == 'l')
+		{
+			*i = *i + 1;
+			new->length = new->length < 4 ? 4 : new->length;
+		}
+		else if (str[*i] == 'z')
+			new->length = !(new->length) ? 6 : new->length;
+		else if (str[*i] == 'j')
+			new->length = !(new->length) ? 7 : new->length;
+		else if (str[*i] == 't')
+			new->length = !(new->length) ? 8 : new->length;
 		*i = *i + 1;
-		new->length = new->length < 1 ? 1 : new->length;
 	}
-	else if (str[*i] == 'h')
-		new->length = new->length < 2 ? 2 : new->length;
-	else if (str[*i] == 'l')
-		new->length = new->length < 3 ? 3 : new->length;
-	else if (str[*i] == 'l' && str[*i + 1] == 'l')
-	{
-		*i = *i + 1;
-		new->length = new->length < 4 ? 4 : new->length;
-	}
-	else if (str[*i] == 'L')
-		new->length = !(new->length) ? 5 : new->length;
-	else if (str[*i] == 'z')
-		new->length = !(new->length) ? 6 : new->length;
-	else if (str[*i] == 'j')
-		new->length = !(new->length) ? 7 : new->length;
-	else if (str[*i] == 't')
-		new->length = !(new->length) ? 8 : new->length;
-	else
-		return (0);
-	*i = *i + 1;
-	return (1);
 }
 
-static int		check_wp(char *str, int *i, t_flag *new)
+static void		check_width(char *str, int *i, t_flag *new, int *ret)
 {
-	int ret;
-
-	ret = 0;
-	if (str[*i] > '0' && str[*i] <= '9')
-	{
-		if (new->width == -2)
-		{
-			new->width = -3;
-			new->nb = ft_atoi(str + *i);
-			*i = *i + length_nbr(new->nb);
-		}
-		else
-		{
-			new->width = ft_atoi(str + *i);
-			*i = *i + length_nbr(new->width);
-		}
-		ret = 1;
-	}
 	if (str[*i] == '*')
 	{
 		new->width = -2;
 		*i = *i + 1;
-		ret = 1;
+		*ret = 1;
 	}
 	if (str[*i] == '.')
 	{
@@ -110,14 +91,41 @@ static int		check_wp(char *str, int *i, t_flag *new)
 		}
 		else
 			new->precision = 0;
-		ret = 1;
+		*ret = 1;
 	}
-	return (ret);
+}
+
+static void		check_wp(char *str, int *i, t_flag *new)
+{
+	int ret;
+
+	ret = 1;
+	while (ret)
+	{
+		ret = 0;
+		if (str[*i] > '0' && str[*i] <= '9')
+		{
+			if (new->width == -2)
+			{
+				new->width = -3;
+				new->nb = ft_atoi(str + *i);
+				*i = *i + length_nbr(new->nb);
+			}
+			else
+			{
+				new->width = ft_atoi(str + *i);
+				*i = *i + length_nbr(new->width);
+			}
+			ret = 1;
+		}
+		check_width(str, i, new, &ret);
+	}
 }
 
 static void		manage_flag(char *str, int *i, t_flag **new)
 {
-	while (str[*i] == '-' || str[*i] == '+' || str[*i] == ' ' || str[*i] == '0' || str[*i] == '#')
+	while (str[*i] == '-' || str[*i] == '+' ||
+			str[*i] == ' ' || str[*i] == '0' || str[*i] == '#')
 	{
 		if (str[*i] == '-')
 			(*new)->minus = 1;
@@ -135,7 +143,7 @@ static void		manage_flag(char *str, int *i, t_flag **new)
 	}
 }
 
-void		check(char *str, int *i, t_flag **new)
+void			check(char *str, int *i, t_flag **new)
 {
 	while (str[*i] == '.' || str[*i] == ' ' || str[*i] == '#' || str[*i] == '0'
 			|| str[*i] == '+' || str[*i] == '-')
@@ -147,40 +155,8 @@ void		check(char *str, int *i, t_flag **new)
 	}
 }
 
-t_flag		*check_carac(char *str, int *i)
+static void		correction_lsc(t_flag *new)
 {
-	t_flag		*new;
-	int			j;
-
-	j = 0;
-	new = create_flag();
-	/*	if (str[*i] > '0' && str[*i] <= '9')
-		{
-		if (str[*i + length_nbr(ft_atoi(str[*i]))] == '$')
-		{
-		new->order = ft_atoi(str[*i]);
-		i = *i + length_nbr(new->order);
-		}
-		}*/
-	manage_flag(str, i, &new);
-	while(check_wp(str, i, new));
-	while (check_length(new, str, i));
-	new->type = str[*i];
-	while (new->type != typeconv[j].type && j < 22)
-		j++;
-	if (j < 22)
-	{
-		new->inttype = typeconv[j].conv;			
-		new->intdisplay = typeconv[j].display;
-	}
-	else if (new->type != 0)
-	{
-		new->inttype = 10;
-		new->intdisplay = 2;
-		new->nb = (long long)new->type;
-	}
-	else
-		new->inttype = 0;
 	if (new->type == 'c' && new->length == 3)
 	{
 		new->inttype = 8;
@@ -191,5 +167,33 @@ t_flag		*check_carac(char *str, int *i)
 		new->inttype = 9;
 		new->intdisplay = 9;
 	}
+}
+
+t_flag			*check_carac(char *str, int *i)
+{
+	t_flag		*new;
+	int			j;
+
+	j = 0;
+	new = create_flag();
+	manage_flag(str, i, &new);
+	check_wp(str, i, new);
+	check_length(new, str, i);
+	check(str, i, &new);
+	new->type = str[*i];
+	while (new->type != g_typeconv[j].type && j < 22)
+		j++;
+	if (j < 22)
+	{
+		new->inttype = g_typeconv[j].conv;
+		new->intdisplay = g_typeconv[j].display;
+	}
+	else if (new->type != 0)
+	{
+		new->inttype = 10;
+		new->intdisplay = 2;
+		new->nb = (long long)new->type;
+	}
+	correction_lsc(new);
 	return (new);
 }

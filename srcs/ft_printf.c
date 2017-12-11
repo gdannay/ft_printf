@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/21 10:02:16 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/09 19:23:04 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/11 10:00:17 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,8 +200,8 @@ int					ft_printf(char *str, ...)
 //	} else {
 //		printf("Locale set to %s\n", l);
 //	}
-	printf("\n%d", ft_printf("{%*3d}", 5, 0));
+	printf("\n%d", ft_printf("%5+d", 42));
 	printf("\n");
-	printf("\n%d", printf("{%*3d}", 5, 0));
+	printf("\n%d", printf("%5+d", 42));
 
 }*/

@@ -6,37 +6,13 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 11:14:17 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/09 17:43:05 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/11 13:04:13 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-long long		atoi_base(char *str, char *input_b)
-{
-	int i;
-	int neg;
-	long long n;
-
-	i = 0;
-	neg = 0;
-	n = 0;
-	if (str[i] == '-')
-	{
-		i++;
-		neg = 1;
-	}
-	while (str[i] >= '0' && str[i] <= '9')
-	{
-		n = n * ft_strlen(input_b) - (str[i] - '0');
-		i++;
-	}
-	if (neg)
-		return (n);
-	return (-n);
-}
-
-char			*mask_uni(char *output, char *bin)
+static char		*mask_uni(char *output, char *bin)
 {
 	int i;
 	int j;
@@ -58,7 +34,9 @@ char			*mask_uni(char *output, char *bin)
 	return (output);
 }
 
-void			ft_putuni(char *c, int rep)
+//Check return !!
+
+static void		ft_putuni(char *c, int rep)
 {
 	int i;
 	long long n[4];
@@ -90,28 +68,39 @@ void			ft_putuni(char *c, int rep)
 	write(1, &(n[0]), 1);
 }
 
-int		compute_rep(char *c)
+static int		manage_wc(t_flag *tmp, char *c, int rep)
 {
-	if (ft_strlen(c) <= 7)
-		return (1);
-	else if (ft_strlen(c) <= 11)
-		return (2);
-	else if (ft_strlen(c) <= 16)
-		return (3);
-	else
-		return (4);
-}
-
-int		manage_uni(t_flag *tmp)
-{
-	char *c;
-	char *c2;
-	int rep;
 	char *new;
+	char *c2;
 	int i;
 
-	c = ltoa_base(tmp, BINA);
+	new = NULL;
+	c2 = NULL;
 	i = 0;
+	tmp->nb = 1;
+	if ((c2 = chartostr(tmp->nb)) == NULL
+			|| (new = display_precision(c2, tmp)) == NULL
+			|| (new = display_width(c2, tmp)) == NULL)
+		return (0);
+	while (new[i] != '\0')
+	{
+		if (new[i] == 1)
+			ft_putuni(c, rep);
+		else
+			ft_putchar(new[i]);
+		i++;
+	}
+	ft_strdel(&c2);
+	ft_strdel(&new);
+	return (1);
+}
+
+int			manage_uni(t_flag *tmp)
+{
+	char *c;
+	int rep;
+
+	c = ltoa_base(tmp, BINA);
 	rep = compute_rep(c);
 	if (tmp->intdisplay == 8 && rep == 1)
 	{
@@ -122,21 +111,8 @@ int		manage_uni(t_flag *tmp)
 		write(1, &(tmp->nb), 1);
 	else if (tmp->type == 'C' && (tmp->precision >= 0 || tmp->width >= 0))
 	{
-		tmp->nb = 1;
-		if ((c2 = chartostr(tmp->nb)) == NULL
-				|| (new = display_precision(c2, tmp)) == NULL
-				|| (new = display_width(c2, tmp)) == NULL)
+		if (manage_wc(tmp, c, rep) == 0)
 			return (0);
-		while (new[i] != '\0')
-		{
-			if (new[i] == 1)
-				ft_putuni(c, rep);
-			else
-				ft_putchar(new[i]);
-			i++;
-		}
-		ft_strdel(&c2);
-		ft_strdel(&new);
 	}
 	else
 		ft_putuni(c, rep);
