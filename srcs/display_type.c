@@ -119,10 +119,8 @@ int				manage_string(t_flag *tmp)
 
 int				manage_char(t_flag *tmp)
 {
-	int		i;
 	char	*c;
 
-	i = 0;
 	c = NULL;
 	if (tmp->nb == 0)
 		return (display_0(tmp, c));

@@ -112,10 +112,8 @@ static char		*correction_neg(char *new, t_flag *tmp, int i, char *tmptxt)
 
 char			*correction_sign(char *s, t_flag *tmp)
 {
-	int		i;
 	char	*tmptxt;
 
-	i = 1;
 	if (tmp->intdisplay == 1 && tmp->type != 'u' && tmp->type != 'U')
 	{
 		tmptxt = s;
