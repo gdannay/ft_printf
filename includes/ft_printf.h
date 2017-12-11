@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/21 10:06:04 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/11 12:49:36 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/11 16:35:42 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,5 +84,7 @@ int						manage_wstring(t_flag *tmp);
 int						size_hexa(long long n);
 int						display_0(t_flag *tmp, char *c);
 int						compute_rep(char *c);
+void					check_width(char *str, int *i, t_flag *new, int *ret);
+void					check_wp(char *str, int *i, t_flag *new);
 
 #endif

@@ -3,6 +3,7 @@ NAME	=	libftprintf.a
 SRCS	=	./srcs/ft_printf.c		\
 			./srcs/lib.c			\
 			./srcs/manage_flag.c	\
+			./srcs/check_wp.c		\
 			./srcs/display.c		\
 			./srcs/ltoa_base.c		\
 			./srcs/display_type.c	\

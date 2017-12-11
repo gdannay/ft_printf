@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/26 13:40:36 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/11 10:36:46 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/11 16:36:11 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,61 +64,6 @@ static void		check_length(t_flag *new, char *str, int *i)
 		else if (str[*i] == 't')
 			new->length = !(new->length) ? 8 : new->length;
 		*i = *i + 1;
-	}
-}
-
-static void		check_width(char *str, int *i, t_flag *new, int *ret)
-{
-	if (str[*i] == '*')
-	{
-		new->width = -2;
-		*i = *i + 1;
-		*ret = 1;
-	}
-	if (str[*i] == '.')
-	{
-		while (str[*i] == '.')
-			*i = *i + 1;
-		if (str[*i] == '*')
-		{
-			new->precision = -2;
-			*i = *i + 1;
-		}
-		else if (str[*i] >= '0' && str[*i] <= '9')
-		{
-			new->precision = ft_atoi(str + *i);
-			*i = *i + length_nbr(new->precision);
-		}
-		else
-			new->precision = 0;
-		*ret = 1;
-	}
-}
-
-static void		check_wp(char *str, int *i, t_flag *new)
-{
-	int ret;
-
-	ret = 1;
-	while (ret)
-	{
-		ret = 0;
-		if (str[*i] > '0' && str[*i] <= '9')
-		{
-			if (new->width == -2)
-			{
-				new->width = -3;
-				new->nb = ft_atoi(str + *i);
-				*i = *i + length_nbr(new->nb);
-			}
-			else
-			{
-				new->width = ft_atoi(str + *i);
-				*i = *i + length_nbr(new->width);
-			}
-			ret = 1;
-		}
-		check_width(str, i, new, &ret);
 	}
 }
 

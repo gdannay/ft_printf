@@ -6,17 +6,17 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 17:14:04 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/09 19:33:48 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/11 16:32:37 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static void		nb_fill(unsigned long long nb, char *new, int taille, char *base)
+static void		nb_fill(unsigned long long nb, char *new, int tail, char *base)
 {
 	if (nb >= (unsigned long long)ft_strlen(base))
-		nb_fill(nb / (unsigned long long)ft_strlen(base), new, taille - 1, base);
-	new[taille] = base[nb % (unsigned long long)ft_strlen(base)];
+		nb_fill(nb / (unsigned long long)ft_strlen(base), new, tail - 1, base);
+	new[tail] = base[nb % (unsigned long long)ft_strlen(base)];
 }
 
 static void		nb_fill_neg(long long nb, char *new, int taille, char *base)
@@ -28,7 +28,7 @@ static void		nb_fill_neg(long long nb, char *new, int taille, char *base)
 
 char			*ltoa_base(t_flag *tmp, char *base)
 {
-	long long 	n;
+	long long	n;
 	int			taille;
 	char		*new;
 
@@ -56,7 +56,7 @@ char			*ltoa_base(t_flag *tmp, char *base)
 
 char			*utoa_base(t_flag *tmp, char *base)
 {
-	unsigned long long 	n;
+	unsigned long long	n;
 	int					taille;
 	char				*new;
 
@@ -96,7 +96,7 @@ char			*dtoa(t_flag *tmp)
 		tmptxt = new;
 		tmp->ld *= 10;
 		tmp->nb = (long long)tmp->ld;
-		c = tmp->nb % 10 +'0';
+		c = tmp->nb % 10 + '0';
 		if ((new = ft_strjoin(tmptxt, &c)) == NULL)
 			return (NULL);
 		ft_strdel(&tmptxt);

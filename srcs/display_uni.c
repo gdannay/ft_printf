@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 11:14:17 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/11 13:04:13 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/11 14:39:37 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,30 +34,37 @@ static char		*mask_uni(char *output, char *bin)
 	return (output);
 }
 
-//Check return !!
-
-static void		ft_putuni(char *c, int rep)
+static char		*mask_rep(char *mask, int rep, char *c)
 {
-	int i;
-	long long n[4];
-	char *mask;
-
-	i = 0;
-	while (i < rep - 1)
-	{
-		mask = ft_strdup("10xxxxxx");
-		mask = mask_uni(mask, c);
-		n[i] = atoi_base(mask, BINA);
-		ft_strdel(&mask);
-		i++;
-	}
 	if (rep == 2)
 		mask = ft_strdup("110xxxxx");
 	if (rep == 3)
 		mask = ft_strdup("1110xxxx");
 	if (rep == 4)
 		mask = ft_strdup("11110xxx");
+	if (mask == NULL)
+		return (NULL);
 	mask = mask_uni(mask, c);
+	return (mask);
+}
+
+static int		ft_putuni(char *c, int rep)
+{
+	int			i;
+	long long	n[4];
+	char		*mask;
+
+	i = 0;
+	while (i < rep - 1)
+	{
+		if ((mask = ft_strdup("10xxxxxx")) == NULL)
+			return (0);
+		mask = mask_uni(mask, c);
+		n[i] = atoi_base(mask, BINA);
+		ft_strdel(&mask);
+		i++;
+	}
+	mask = mask_rep(mask, rep, c);
 	n[i] = atoi_base(mask, BINA);
 	ft_strdel(&mask);
 	if (rep > 3)
@@ -66,18 +73,18 @@ static void		ft_putuni(char *c, int rep)
 		write(1, &(n[2]), 1);
 	write(1, &(n[1]), 1);
 	write(1, &(n[0]), 1);
+	return (1);
 }
 
 static int		manage_wc(t_flag *tmp, char *c, int rep)
 {
-	char *new;
-	char *c2;
-	int i;
+	char	*new;
+	char	*c2;
+	int		i;
 
 	new = NULL;
 	c2 = NULL;
 	i = 0;
-	tmp->nb = 1;
 	if ((c2 = chartostr(tmp->nb)) == NULL
 			|| (new = display_precision(c2, tmp)) == NULL
 			|| (new = display_width(c2, tmp)) == NULL)
@@ -85,7 +92,10 @@ static int		manage_wc(t_flag *tmp, char *c, int rep)
 	while (new[i] != '\0')
 	{
 		if (new[i] == 1)
-			ft_putuni(c, rep);
+		{
+			if (ft_putuni(c, rep) == 0)
+				return (0);
+		}
 		else
 			ft_putchar(new[i]);
 		i++;
@@ -95,10 +105,10 @@ static int		manage_wc(t_flag *tmp, char *c, int rep)
 	return (1);
 }
 
-int			manage_uni(t_flag *tmp)
+int				manage_uni(t_flag *tmp)
 {
-	char *c;
-	int rep;
+	char	*c;
+	int		rep;
 
 	c = ltoa_base(tmp, BINA);
 	rep = compute_rep(c);
@@ -111,11 +121,15 @@ int			manage_uni(t_flag *tmp)
 		write(1, &(tmp->nb), 1);
 	else if (tmp->type == 'C' && (tmp->precision >= 0 || tmp->width >= 0))
 	{
+		tmp->nb = 1;
 		if (manage_wc(tmp, c, rep) == 0)
 			return (0);
 	}
 	else
-		ft_putuni(c, rep);
+	{
+		if ((ft_putuni(c, rep)) == 0)
+			return (0);
+	}
 	ft_strdel(&c);
 	return (rep);
 }

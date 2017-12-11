@@ -6,11 +6,35 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/01 10:23:15 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/11 12:04:42 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/11 16:20:49 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+char			*display_precision(char *new, t_flag *tmp)
+{
+	char *tmptxt;
+	char *t2;
+
+	if (tmp->nb < 0 && tmp->precision > 0)
+		tmp->precision = tmp->precision + 1;
+	if (tmp->precision >= 0 && (tmp->intdisplay == 1 || tmp->intdisplay == 6))
+		tmp->zero = 0;
+	if ((int)ft_strlen(new) < tmp->precision
+			&& (tmp->intdisplay == 1 || tmp->intdisplay == 6))
+	{
+		tmptxt = new;
+		if ((t2 = ft_bchar('0',
+						(size_t)tmp->precision - ft_strlen(new))) == NULL)
+			return (NULL);
+		if ((new = ft_strjoin(t2, tmptxt)) == NULL)
+			return (NULL);
+		ft_strdel(&t2);
+		ft_strdel(&tmptxt);
+	}
+	return (new);
+}
 
 static char		*display_hash_blank(char *new, t_flag *tmp)
 {
@@ -84,6 +108,9 @@ int				display_flag(char *new, t_flag *tmp)
 				|| tmp->type == 'X' ||
 				(tmp->type == 'o' && tmp->precision != 0)))
 		tmp->hash = 0;
+	if (tmp->space == 1 && tmp->plus == 0
+			&& (tmp->intdisplay == 1 || tmp->intdisplay == 6))
+		tmp->width = tmp->width - 1;
 	if (((new = display_hash_blank(new, tmp)) == NULL && tmp->precision != 0)
 			|| (new = display_width(new, tmp)) == NULL
 			|| (new = display_hash_zero(new, tmp)) == NULL

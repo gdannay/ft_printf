@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/21 15:24:19 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/11 12:49:09 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/11 16:31:13 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int			display_0(t_flag *tmp, char *c)
 	return (i);
 }
 
-int		compute_rep(char *c)
+int			compute_rep(char *c)
 {
 	if (ft_strlen(c) <= 7)
 		return (1);
