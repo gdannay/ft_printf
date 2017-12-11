@@ -6,11 +6,36 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 16:33:54 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/11 16:37:02 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/11 16:41:42 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+void		fill_wp(t_flag *tmp, va_list va)
+{
+	if (tmp->width == -2)
+	{
+		tmp->width = va_arg(va, int);
+		if (tmp->width < 0)
+		{
+			tmp->minus = 1;
+			tmp->width *= -1;
+		}
+	}
+	if (tmp->width == -3)
+	{
+		va_arg(va, int);
+		tmp->width = tmp->nb;
+		if (tmp->width < 0)
+		{
+			tmp->minus = 1;
+			tmp->width *= -1;
+		}
+	}
+	if (tmp->precision == -2)
+		tmp->precision = va_arg(va, int);
+}
 
 void		check_width(char *str, int *i, t_flag *new, int *ret)
 {

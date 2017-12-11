@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 11:14:17 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/11 14:39:37 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/11 19:26:23 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,8 @@ static int		ft_putuni(char *c, int rep)
 		ft_strdel(&mask);
 		i++;
 	}
-	mask = mask_rep(mask, rep, c);
+	if ((mask = mask_rep(mask, rep, c)) == NULL)
+		return (0);
 	n[i] = atoi_base(mask, BINA);
 	ft_strdel(&mask);
 	if (rep > 3)
@@ -82,9 +83,8 @@ static int		manage_wc(t_flag *tmp, char *c, int rep)
 	char	*c2;
 	int		i;
 
-	new = NULL;
-	c2 = NULL;
 	i = 0;
+	tmp->nb = 1;
 	if ((c2 = chartostr(tmp->nb)) == NULL
 			|| (new = display_precision(c2, tmp)) == NULL
 			|| (new = display_width(c2, tmp)) == NULL)
@@ -110,7 +110,8 @@ int				manage_uni(t_flag *tmp)
 	char	*c;
 	int		rep;
 
-	c = ltoa_base(tmp, BINA);
+	if ((c = ltoa_base(tmp, BINA)) == NULL)
+		return (0);
 	rep = compute_rep(c);
 	if (tmp->intdisplay == 8 && rep == 1)
 	{
@@ -121,7 +122,6 @@ int				manage_uni(t_flag *tmp)
 		write(1, &(tmp->nb), 1);
 	else if (tmp->type == 'C' && (tmp->precision >= 0 || tmp->width >= 0))
 	{
-		tmp->nb = 1;
 		if (manage_wc(tmp, c, rep) == 0)
 			return (0);
 	}

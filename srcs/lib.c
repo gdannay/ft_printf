@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/21 15:24:19 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/11 16:31:13 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/11 18:39:23 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,29 +40,20 @@ t_flag		*create_flag(void)
 	return (new);
 }
 
-void		fill_wp(t_flag *tmp, va_list va)
+void		free_lst(t_flag **flag)
 {
-	if (tmp->width == -2)
+	t_flag *tmp;
+
+	while (*flag)
 	{
-		tmp->width = va_arg(va, int);
-		if (tmp->width < 0)
-		{
-			tmp->minus = 1;
-			tmp->width *= -1;
-		}
+		tmp = (*flag)->next;
+		if ((*flag)->st != NULL)
+			free((*flag)->st);
+		if ((*flag)->wst != NULL)
+			free((*flag)->wst);
+		free(*flag);
+		(*flag) = tmp;
 	}
-	if (tmp->width == -3)
-	{
-		va_arg(va, int);
-		tmp->width = tmp->nb;
-		if (tmp->width < 0)
-		{
-			tmp->minus = 1;
-			tmp->width *= -1;
-		}
-	}
-	if (tmp->precision == -2)
-		tmp->precision = va_arg(va, int);
 }
 
 int			size_hexa(long long n)

@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: gdannay <marvin@42.fr>                     +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2017/12/11 17:15:07 by gdannay           #+#    #+#              #
+#    Updated: 2017/12/11 18:36:28 by gdannay          ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME	=	libftprintf.a
 
 SRCS	=	./srcs/ft_printf.c		\
@@ -25,7 +37,8 @@ SRCS	=	./srcs/ft_printf.c		\
 			./libft/ft_bchar.c		\
 			./libft/ft_lennbr.c		\
 			./libft/ft_atoi_base.c	\
-			./libft/ft_wstrlen.c	
+			./libft/ft_wstrlen.c	\
+			./libft/ft_wstrdup.c	
 
 OBJS	=	$(SRCS:.c=.o)
 
@@ -49,8 +62,9 @@ clean	:
 			make clean -C libft
 			rm -rf $(OBJS)
 
-fclean	:	clean
+fclean	:
 			make fclean -C libft
+			rm -rf $(OBJS)
 			rm -rf $(NAME)
 
 re		:	fclean all

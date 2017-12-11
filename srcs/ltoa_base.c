@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 17:14:04 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/11 16:32:37 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/11 20:03:41 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,34 +73,5 @@ char			*utoa_base(t_flag *tmp, char *base)
 		return (NULL);
 	nb_fill(tmp->unb, new, taille - 1, base);
 	new[taille] = '\0';
-	return (new);
-}
-
-char			*dtoa(t_flag *tmp)
-{
-	char	*new;
-	char	*tmptxt;
-	int		i;
-	char	c;
-
-	i = 0;
-	tmp->nb = (long long)tmp->ld;
-	if ((new = ltoa_base(tmp, DECI)) == NULL)
-		return (NULL);
-	tmptxt = new;
-	if ((new = ft_strjoin(tmptxt, ".")) == NULL)
-		return (NULL);
-	ft_strdel(&tmptxt);
-	while (i < 6 || i < tmp->precision)
-	{
-		tmptxt = new;
-		tmp->ld *= 10;
-		tmp->nb = (long long)tmp->ld;
-		c = tmp->nb % 10 + '0';
-		if ((new = ft_strjoin(tmptxt, &c)) == NULL)
-			return (NULL);
-		ft_strdel(&tmptxt);
-		i++;
-	}
 	return (new);
 }

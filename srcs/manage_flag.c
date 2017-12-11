@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/26 13:40:36 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/11 16:36:11 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/11 19:54:56 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ static void		manage_flag(char *str, int *i, t_flag **new)
 	}
 }
 
-void			check(char *str, int *i, t_flag **new)
+static void		check(char *str, int *i, t_flag **new)
 {
 	while (str[*i] == '.' || str[*i] == ' ' || str[*i] == '#' || str[*i] == '0'
 			|| str[*i] == '+' || str[*i] == '-')
@@ -100,8 +100,14 @@ void			check(char *str, int *i, t_flag **new)
 	}
 }
 
-static void		correction_lsc(t_flag *new)
+static void		correction_lsc(t_flag *new, int j)
 {
+	if (new->type != 0 && j >= 22)
+	{
+		new->inttype = 10;
+		new->intdisplay = 2;
+		new->nb = (long long)new->type;
+	}
 	if (new->type == 'c' && new->length == 3)
 	{
 		new->inttype = 8;
@@ -120,7 +126,8 @@ t_flag			*check_carac(char *str, int *i)
 	int			j;
 
 	j = 0;
-	new = create_flag();
+	if ((new = create_flag()) == NULL)
+		return (NULL);
 	manage_flag(str, i, &new);
 	check_wp(str, i, new);
 	check_length(new, str, i);
@@ -133,12 +140,6 @@ t_flag			*check_carac(char *str, int *i)
 		new->inttype = g_typeconv[j].conv;
 		new->intdisplay = g_typeconv[j].display;
 	}
-	else if (new->type != 0)
-	{
-		new->inttype = 10;
-		new->intdisplay = 2;
-		new->nb = (long long)new->type;
-	}
-	correction_lsc(new);
+	correction_lsc(new, j);
 	return (new);
 }

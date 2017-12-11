@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 10:50:28 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/11 11:10:49 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/11 20:00:26 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static char		*zero_precision(t_flag *tmp)
 	char	*tmptxt;
 	int		rep;
 	int		prec;
+	char	*t2;
 
 	tmptxt = NULL;
 	rep = 0;
@@ -24,19 +25,18 @@ static char		*zero_precision(t_flag *tmp)
 	while (tmp->wst[prec] && rep <= tmp->precision)
 	{
 		tmp->nb = tmp->wst[prec];
-		rep += compute_rep(ltoa_base(tmp, BINA));
+		if ((t2 = ltoa_base(tmp, BINA)) == NULL)
+			return (NULL);
+		rep += compute_rep(t2);
+		ft_strdel(&t2);
 		prec++;
 	}
 	if (rep > tmp->precision)
-	{
-		if ((tmptxt = ft_bchar(1, (size_t)prec - 1)) == NULL)
-			return (NULL);
-	}
+		tmptxt = ft_bchar(1, (size_t)prec - 1);
 	else
-	{
-		if ((tmptxt = ft_bchar(1, (size_t)prec)) == NULL)
-			return (NULL);
-	}
+		tmptxt = ft_bchar(1, (size_t)prec);
+	if (tmptxt == NULL)
+		return (NULL);
 	return (tmptxt);
 }
 
@@ -64,6 +64,7 @@ static int		display_wstring(char *new, t_flag *tmp)
 		}
 		i++;
 	}
+	ft_strdel(&new);
 	return (length);
 }
 
@@ -85,29 +86,29 @@ static char		*manage_tmptxt(t_flag *tmp)
 
 int				manage_wstring(t_flag *tmp)
 {
-	char	*tmptxt;
 	char	*new;
+	char	*t2;
 	int		i;
 	int		rep;
-	int		prec;
 
-	i = 0;
+	i = -1;
 	rep = 0;
-	prec = 0;
 	if (tmp->precision == 0)
 		return (display_flag(NULL, tmp));
-	if ((tmptxt = manage_tmptxt(tmp)) == NULL)
+	if ((new = manage_tmptxt(tmp)) == NULL)
 		return (0);
 	if (tmp->wst == NULL)
-		return (display_flag(tmptxt, tmp));
-	while (tmptxt[i] && tmp->wst[i] != '\0')
+		return (display_flag(new, tmp));
+	while (new[++i] && tmp->wst[i] != '\0')
 	{
 		tmp->nb = tmp->wst[i];
-		rep += compute_rep(ltoa_base(tmp, BINA)) - 1;
-		i++;
+		if ((t2 = ltoa_base(tmp, BINA)) == NULL)
+			return (0);
+		rep += compute_rep(t2) - 1;
+		ft_strdel(&t2);
 	}
 	tmp->width -= rep;
-	if ((new = display_width(tmptxt, tmp)) == NULL)
+	if ((new = display_width(new, tmp)) == NULL)
 		return (0);
 	return (display_wstring(new, tmp));
 }

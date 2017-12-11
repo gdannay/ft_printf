@@ -1,37 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi_base.c                                     :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/12/11 10:38:34 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/11 17:22:48 by gdannay          ###   ########.fr       */
+/*   Created: 2017/11/09 21:40:08 by gdannay           #+#    #+#             */
+/*   Updated: 2017/12/11 18:34:35 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <string.h>
+#include <stdlib.h>
 #include "libft.h"
 
-long long		atoi_base(char *str, char *input_b)
+wchar_t	*ft_wstrdup(const wchar_t *s)
 {
-	int			i;
-	int			neg;
-	long long	n;
+	int		i;
+	wchar_t	*new;
 
 	i = 0;
-	neg = 0;
-	n = 0;
-	if (str[i] == '-')
-	{
+	if (s == NULL)
+		return (NULL);
+	while (s[i] != '\0')
 		i++;
-		neg = 1;
-	}
-	while (str[i] >= '0' && str[i] <= '9')
+	if ((new = (wchar_t *)malloc(sizeof(wchar_t) * (i + 1))) == NULL)
+		return (NULL);
+	i = 0;
+	while (s[i] != '\0')
 	{
-		n = n * ft_strlen(input_b) - (str[i] - '0');
+		new[i] = s[i];
 		i++;
 	}
-	if (neg)
-		return (n);
-	return (-n);
+	new[i] = '\0';
+	return (new);
 }

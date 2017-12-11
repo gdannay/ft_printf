@@ -6,29 +6,27 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/02 18:22:57 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/11 12:46:39 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/11 19:17:26 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static char		*manage_neg(t_flag *tmp, char *new)
+static char		*manage_neg(t_flag *tmp, char *new, int taille, int n)
 {
-	long long	n;
-	long long	taille;
 	char		*t2;
 	char		*tmptxt;
 
 	tmptxt = new;
-	n = tmp->nb;
-	taille = size_hexa(n);
-	t2 = ft_bchar('0', 8);
-	n = tmp->nb;
+	if ((t2 = ft_bchar('0', 8)) == NULL)
+		return (NULL);
 	tmp->nb = 4294967296 - taille;
 	if (tmp->type == 'x')
 		new = ltoa_base(tmp, HEXAMIN);
 	else if (tmp->type == 'X')
 		new = ltoa_base(tmp, HEXAMAJ);
+	if (new == NULL)
+		return (NULL);
 	tmp->nb = n + 4294967296 * taille;
 	if (tmp->nb == 0)
 		new = ft_strjoin(new, ft_bchar('0', 8));
@@ -36,6 +34,8 @@ static char		*manage_neg(t_flag *tmp, char *new)
 		new = ft_strjoin(new, ltoa_base(tmp, HEXAMIN));
 	else if (tmp->type == 'X')
 		new = ft_strjoin(new, ltoa_base(tmp, HEXAMAJ));
+	if (new == NULL)
+		return (NULL);
 	ft_strdel(&tmptxt);
 	ft_strdel(&t2);
 	return (new);
@@ -47,7 +47,10 @@ static char		*manage_hexa(t_flag *tmp)
 
 	new = NULL;
 	if (tmp->nb <= -4294967296)
-		new = manage_neg(tmp, new);
+	{
+		new = manage_neg(tmp, new,
+				size_hexa(tmp->nb), tmp->nb);
+	}
 	else
 	{
 		tmp->nb += 4294967296;
@@ -92,7 +95,6 @@ int				manage_nb(t_flag *tmp)
 int				manage_string(t_flag *tmp)
 {
 	char	*tmptxt;
-	int		length;
 
 	if (tmp->st == NULL)
 	{
@@ -105,8 +107,7 @@ int				manage_string(t_flag *tmp)
 	{
 		if ((tmptxt = ft_strndup(tmp->st, (size_t)tmp->precision)) == NULL)
 			return (0);
-		length = display_flag(tmptxt, tmp);
-		return (length);
+		return (display_flag(tmptxt, tmp));
 	}
 	else
 	{

@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/21 10:06:04 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/11 16:35:42 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/11 20:03:46 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,18 +65,19 @@ t_flag					*create_flag(void);
 int						length_nbr(int n);
 t_flag					*check_carac(char *str, int *i);
 void					fill_wp(t_flag *tmp, va_list va);
+void					check_width(char *str, int *i, t_flag *new, int *ret);
+void					check_wp(char *str, int *i, t_flag *new);
 int						display(char *str, t_flag *flag);
 char					*ltoa_base(t_flag *tmp, char *base);
 char					*utoa_base(t_flag *tmp, char *base);
-char					*dtoa(t_flag *tmp);
 char					*chartostr(long long c);
 int						display_flag(char *new, t_flag *tmp);
 int						manage_nb(t_flag *tmp);
 int						manage_string(t_flag *tmp);
 int						manage_char(t_flag *tmp);
 char					*ft_bchar(char c, size_t length);
-char					*display_precision(char *, t_flag *tmp);
-char					*display_width(char *, t_flag *tmp);
+char					*display_precision(char *new, t_flag *tmp);
+char					*display_width(char *new, t_flag *tmp);
 char					*correction_sign(char *new, t_flag *tmp);
 int						manage_uni(t_flag *tmp);
 int						compute_rep(char *c);
@@ -86,5 +87,6 @@ int						display_0(t_flag *tmp, char *c);
 int						compute_rep(char *c);
 void					check_width(char *str, int *i, t_flag *new, int *ret);
 void					check_wp(char *str, int *i, t_flag *new);
+void					free_lst(t_flag **flag);
 
 #endif

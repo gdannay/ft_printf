@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/01 10:23:15 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/11 16:20:49 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/11 19:48:08 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,10 @@ static char		*display_hash_zero(char *new, t_flag *tmp)
 		if (new[0] == '0' && new[1] == '0')
 			new[1] = tmp->type;
 		else
-			new = display_hash_zero_join(tmp, new);
+		{
+			if ((new = display_hash_zero_join(tmp, new)) == NULL)
+				return (NULL);
+		}
 	}
 	return (new);
 }

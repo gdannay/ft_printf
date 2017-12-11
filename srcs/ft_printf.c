@@ -6,14 +6,13 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/21 10:02:16 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/11 10:00:17 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/11 18:38:45 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "ft_printf.h"
 
-static t_flag			*parse_str(char *str)
+static t_flag		*parse_str(char *str)
 {
 	t_flag		*flag;
 	t_flag		*tmp;
@@ -103,31 +102,17 @@ static void			fill_content(va_list va, t_flag *tmp)
 	else if (tmp->inttype == 8)
 		tmp->nb = va_arg(va, wchar_t);
 	else if (tmp->inttype == 9)
-		tmp->wst = va_arg(va, wchar_t *);
-}
-
-void				free_lst(t_flag **flag)
-{
-	t_flag *tmp;
-
-	while (*flag)
-	{
-		tmp = (*flag)->next;
-		if ((*flag)->st != NULL)
-			free((*flag)->st);
-		free(*flag);
-		(*flag) = tmp;
-	}
+		tmp->wst = ft_wstrdup(va_arg(va, wchar_t *));
 }
 
 int					ft_printf(char *str, ...)
 {
 	va_list		va;
-	va_start	(va, str);
 	t_flag		*flag;
 	t_flag		*tmp;
 	int			length;
 
+	va_start(va, str);
 	length = 0;
 	if ((flag = parse_str(str)) == NULL && str == NULL)
 		return (0);
@@ -139,69 +124,6 @@ int					ft_printf(char *str, ...)
 	}
 	length = display(str, flag);
 	free_lst(&flag);
-
-	//	printf("minus = %d, plus = %d, space = %d, zero = %d, hash = %d, width = %d, precision = %d, length = %d, type = %c, inttype = %d, %d\n", flag->minus, flag->plus, flag->space, flag->zero, flag->hash, flag->width, flag->precision, flag->length, flag->type, flag->inttype, flag->nb);
-	//	flag = flag->next;
-	//	printf("minus = %d, plus = %d, space = %d, zero = %d, hash = %d, width = %d, precision = %d, length = %d, type = %c, inttype = %d\n", flag->minus, flag->plus, flag->space, flag->zero, flag->hash, flag->width, flag->precision, flag->length, flag->type, flag->inttype);
-	//	flag = flag->next;
-	//	printf("minus = %d, plus = %d, space = %d, zero = %d, hash = %d, width = %d, precision = %d, length = %d, type = %c, inttype = %d, %s\n", flag->minus, flag->plus, flag->space, flag->zero, flag->hash, flag->width, flag->precision, flag->length, flag->type, flag->inttype, flag->st);
-	//	flag = flag->next;
-	//	printf("minus = %d, plus = %d, space = %d, zero = %d, hash = %d, width = %d, precision = %d, length = %d, type = %c, inttype = %d, %s\n", flag->minus, flag->plus, flag->space, flag->zero, flag->hash, flag->width, flag->precision, flag->length, flag->type, flag->inttype, flag->st);
-	va_end (va);
-	//	printf("%s", new);
-	//	ft_putstr(new);
+	va_end(va);
 	return (length);
 }
-
-/*int main(void)
-  {
-  ft_printf("\n");
-  ft_printf("%%\n");
-  ft_printf("%d\n", 42);
-  ft_printf("%d%d\n", 42, 41);
-  ft_printf("%d%d%d\n", 42, 43, 44);
-  ft_printf("%ld\n", 2147483647);
-  ft_printf("%lld\n", 9223372036854775807);
-  ft_printf("%x\n", 505);
-  ft_printf("%X\n", 505);
-  ft_printf("%p\n", &ft_printf);
-  ft_printf("%20.15d\n", 54321);
-  ft_printf("%-10d\n", 3);
-  ft_printf("% d\n", 3);
-  ft_printf("%+d\n", 3);
-  ft_printf("%010d\n", 1);
-  ft_printf("%hhd\n", 0);
-  ft_printf("%jd\n", 9223372036854775807);
-  ft_printf("%zd\n", 4294967295);
-  ft_printf("%\n");
-  ft_printf("%U\n", 4294967295);
-  ft_printf("%u\n", 4294967295);
-  ft_printf("%o\n", 40);
-  ft_printf("%%#08x\n", 42);
-  ft_printf("%x\n", 1000);
-  ft_printf("%#X\n", 1000);
-  ft_printf("%s\n", NULL);
-  ft_printf("%s%s\n", "test", "test");
-  ft_printf("%s%s%s\n", "test", "test", "test");
-  ft_printf("%C\n", 15000);
-  while (1);
-  return (0);
-  }*/
-
-#include "limits.h"
-
-#include <locale.h>
-
-/*int		main()
-{
-	char* l = setlocale(LC_ALL, "");
-//	if (l == NULL) {
-//		printf("Locale not set\n");
-//	} else {
-//		printf("Locale set to %s\n", l);
-//	}
-	printf("\n%d", ft_printf("%5+d", 42));
-	printf("\n");
-	printf("\n%d", printf("%5+d", 42));
-
-}*/
