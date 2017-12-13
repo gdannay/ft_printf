@@ -6,133 +6,91 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/06 11:13:23 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/11 16:30:10 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/13 19:02:56 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static char		*manage_zero(t_flag *tmp, char *tmptxt, char *t2)
+int			display_width(char *buff, t_flag *tmp, int index)
 {
-	char *new;
-
-	new = NULL;
-	if (tmp->type == 'p')
-		new = ft_strjoin(tmptxt, t2);
-	else
-		new = ft_strjoin(t2, tmptxt);
-	if (new == NULL)
-		return (NULL);
-	return (new);
-}
-
-char			*display_width(char *new, t_flag *tmp)
-{
-	char *tmptxt;
-	char *t2;
-
-	if ((int)ft_strlen(new) < tmp->width)
+	if ((int)ft_strlen(buff) - index < tmp->width)
 	{
-		tmptxt = new;
-		if ((t2 = ft_bchar(' ', (size_t)tmp->width - ft_strlen(new))) == NULL)
-			return (NULL);
 		if (tmp->minus == 1)
-			new = ft_strjoin(tmptxt, t2);
+			return (add_char_left(buff, ' ', index, (size_t)tmp->width - ft_strlen(buff) + index));
 		else if (tmp->zero == 1)
 		{
-			ft_strdel(&t2);
-			if (!(t2 = ft_bchar('0', (size_t)tmp->width - ft_strlen(new))))
-				return (NULL);
-			new = manage_zero(tmp, tmptxt, t2);
+			if (tmp->type == 'p')
+				return (add_char_left(buff, '0', index, (size_t)tmp->width - ft_strlen(buff) + index));
+			else
+				return (add_char_right(buff, '0', index, (size_t)tmp->width - ft_strlen(buff) + index));
 		}
 		else
-			new = ft_strjoin(t2, tmptxt);
-		if (new == NULL)
-			return (NULL);
-		ft_strdel(&tmptxt);
-		ft_strdel(&t2);
+			return (add_char_right(buff, ' ', index, (size_t)tmp->width - ft_strlen(buff) + index));
 	}
-	return (new);
+	return (0);
 }
 
-static char		*display_plus(char *new, t_flag *tmp)
+static int	display_plus(char *buff, t_flag *tmp, int index)
 {
 	int		i;
-	char	*tmptxt;
 
 	i = 0;
-	if (tmp->zero == 1 && new[0] == '0')
-		new[0] = '+';
-	else if (new[0] == ' ')
+	if (tmp->zero == 1 && buff[index] == '0')
+		buff[index] = '+';
+	else if (buff[index] == ' ')
 	{
-		while (new[i] && new[i] == ' ')
+		while (buff[index + i] && buff[index + i] == ' ')
 			i++;
-		new[i - 1] = '+';
+		buff[index + i - 1] = '+';
 	}
 	else
 	{
-		tmptxt = new;
-		if ((int)ft_strlen(new) == tmp->width)
-			new[(int)ft_strlen(new) - 1] = '\0';
-		if ((new = ft_strjoin("+", tmptxt)) == NULL)
-			return (NULL);
-		ft_strdel(&tmptxt);
+		if ((int)ft_strlen(buff) - i == tmp->width)
+			buff[(int)ft_strlen(buff) - 1] = '\0';
+		return (add_right(buff, "+", index, 1));
 	}
-	return (new);
+	return (0);
 }
 
-static char		*correction_neg(char *new, t_flag *tmp, int i, char *tmptxt)
+static int		correction_neg(char *buff, t_flag *tmp, int index)
 {
-	while (new[i] && new[i] == new[0])
+	int i;
+
+	i = 1;
+	while (buff[index + i] && buff[index + i] == buff[index])
 		i++;
-	if (new[0] == '0')
+	if (buff[index] == '0')
 	{
-		new[i] = '0';
-		if (tmp->zero == 1 || (int)ft_strlen(new) == tmp->precision)
-			new[0] = '-';
+		buff[index + i] = '0';
+		if (tmp->zero == 1 || (int)ft_strlen(buff) - index == tmp->precision)
+			buff[index] = '-';
 		else
-		{
-			if ((new = ft_strjoin("-", tmptxt)) == NULL)
-				return (NULL);
-			ft_strdel(&tmptxt);
-		}
+			return (add_right(buff, "-", index, 1));
 	}
-	else if (new[0] == ' ')
+	else if (buff[index] == ' ')
 	{
-		if (new[i] && new[i] == '0')
-			new[i] = '-';
+		if (buff[index + i] && buff[index + i] == '0')
+			buff[index + i] = '-';
 		i++;
-		while (new[i] && new[i] != '-')
+		while (buff[index + i] && buff[index + i] != '-')
 			i++;
-		if (new[i])
-			new[i] = '0';
+		if (buff[index + i])
+			buff[index + i] = '0';
 	}
-	return (new);
+	return (0);
 }
 
-char			*correction_sign(char *s, t_flag *tmp)
+int			correction_sign(char *buff, t_flag *tmp, int index)
 {
-	char	*tmptxt;
-
 	if (tmp->intdisplay == 1 && tmp->type != 'u' && tmp->type != 'U')
 	{
-		tmptxt = s;
 		if (tmp->nb < 0)
-		{
-			if ((s = correction_neg(s, tmp, 1, tmptxt)) == NULL)
-				return (NULL);
-		}
+			return (correction_neg(buff, tmp, index));
 		else if (tmp->nb >= 0 && tmp->plus == 1)
-		{
-			if ((s = display_plus(s, tmp)) == NULL)
-				return (NULL);
-		}
-		else if (tmp->space && tmp->nb >= 0 && tmp->width <= (int)ft_strlen(s))
-		{
-			if ((s = ft_strjoin(" ", tmptxt)) == NULL)
-				return (NULL);
-			ft_strdel(&tmptxt);
-		}
+			return (display_plus(buff, tmp, index));
+		else if (tmp->space && tmp->nb >= 0 && tmp->width <= (int)ft_strlen(buff) - index)
+			return (add_right(buff, " ", index, 1));
 	}
-	return (s);
+	return (0);
 }

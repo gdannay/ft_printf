@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 10:50:28 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/13 10:47:19 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/13 19:13:15 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static char		*zero_precision(t_flag *tmp)
 	return (tmptxt);
 }
 
-static int		display_wstring(char *new, t_flag *tmp, char *buff)
+static int		display_wstring(t_flag *tmp, char *buff)
 {
 	int length;
 	int i;
@@ -49,9 +49,9 @@ static int		display_wstring(char *new, t_flag *tmp, char *buff)
 	i = 0;
 	length = 0;
 	j = 0;
-	while (new[i] != '\0')
+	while (buff[i] != '\0')
 	{
-		if (new[i] == 1)
+		if (buff[i] == 1)
 		{
 			tmp->nb = (long long)tmp->wst[j];
 			length += manage_uni(tmp, buff);
@@ -59,12 +59,12 @@ static int		display_wstring(char *new, t_flag *tmp, char *buff)
 		}
 		else
 		{
-			ft_putchar(new[i]);
+			ft_putchar(buff[i]);
 			length++;
 		}
 		i++;
 	}
-	ft_strdel(&new);
+	buff[0] = '\0';
 	return (length);
 }
 
@@ -83,16 +83,18 @@ static char		*manage_tmptxt(t_flag *tmp)
 		return (NULL);
 	return (tmptxt);
 }
-
+//leaks !!!
 int				manage_wstring(t_flag *tmp, char *buff)
 {
 	char	*new;
 	char	*t2;
 	int		i;
 	int		rep;
+	int		l;
 
 	i = -1;
 	rep = 0;
+	l = 0;
 	if (tmp->precision == 0)
 		return (display_flag(NULL, tmp, buff));
 	if ((new = manage_tmptxt(tmp)) == NULL)
@@ -107,9 +109,10 @@ int				manage_wstring(t_flag *tmp, char *buff)
 		rep += compute_rep(t2) - 1;
 		ft_strdel(&t2);
 	}
+	l += print_buff(buff);
 	tmp->width -= rep;
-	if ((new = display_width(new, tmp)) == NULL)
-		return (0);
-	buff = print_buff(buff);
-	return (display_wstring(new, tmp, buff));
+	l += manage_buff(buff, new, ft_strlen(new));
+	ft_strdel(&new);
+	l += display_width(buff, tmp, 0);
+	return (l + display_wstring(tmp, buff));
 }

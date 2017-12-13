@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/21 15:24:19 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/13 10:39:57 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/13 18:08:14 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,10 @@ t_flag		*create_flag(void)
 	new->nb = 0;
 	new->unb = 0;
 	new->inttype = 0;
-	new->db = 0;
-	new->n = NULL;
-	new->vd = NULL;
 	new->st = NULL;
+	new->wst = NULL;
 	new->next = NULL;
 	new->wst = NULL;
-	new->order = 0;
 	return (new);
 }
 
@@ -73,25 +70,28 @@ int			display_0(t_flag *tmp, char *c, char *buff)
 {
 	int		i;
 	char	*new;
+	int l;
 
 	i = 0;
+	l = 0;
 	new = NULL;
 	tmp->nb = 1;
-	buff = print_buff(buff);
-	if ((c = chartostr(tmp->nb)) == NULL
-			|| (new = display_precision(c, tmp)) == NULL
-			|| (new = display_width(c, tmp)) == NULL)
+	l = print_buff(buff);
+	if ((c = chartostr(tmp->nb)) == NULL)
 		return (0);
-	while (new[i] != '\0')
+	l += manage_buff(buff, c, 1);
+	l += display_precision(buff, tmp, 0);
+	l += display_width(buff, tmp, 0);
+	while (buff[i] != '\0')
 	{
-		if (new[i] == 1)
+		if (buff[i] == 1)
 			ft_putchar(0);
 		else
-			ft_putchar(new[i]);
+			ft_putchar(buff[i]);
 		i++;
 	}
-	ft_strdel(&new);
-	return (i);
+	buff[0] = '\0';
+	return (l + i);
 }
 
 int			compute_rep(char *c)

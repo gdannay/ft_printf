@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/26 13:40:36 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/11 19:54:56 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/13 18:14:31 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,6 @@ static t_type	g_typeconv[] =
 	{'U', 4, 1},
 	{'x', 6, 6},
 	{'X', 6, 6},
-	{'e', 5, 5},
-	{'E', 5, 5},
-	{'f', 5, 5},
-	{'F', 5, 5},
-	{'g', 5, 5},
-	{'G', 5, 5},
-	{'a', 5, 5},
-	{'A', 5, 5},
 };
 
 static void		check_length(t_flag *new, char *str, int *i)
@@ -102,7 +94,7 @@ static void		check(char *str, int *i, t_flag **new)
 
 static void		correction_lsc(t_flag *new, int j)
 {
-	if (new->type != 0 && j >= 22)
+	if (new->type != 0 && j >= 14)
 	{
 		new->inttype = 10;
 		new->intdisplay = 2;
@@ -133,9 +125,9 @@ t_flag			*check_carac(char *str, int *i)
 	check_length(new, str, i);
 	check(str, i, &new);
 	new->type = str[*i];
-	while (new->type != g_typeconv[j].type && j < 22)
+	while (new->type != g_typeconv[j].type && j < 14)
 		j++;
-	if (j < 22)
+	if (j < 14)
 	{
 		new->inttype = g_typeconv[j].conv;
 		new->intdisplay = g_typeconv[j].display;

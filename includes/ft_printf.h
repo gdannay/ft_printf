@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/21 10:06:04 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/13 12:00:31 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/13 19:10:56 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,7 @@ typedef struct			s_flag
 	int					intdisplay;
 	long long			nb;
 	unsigned long long	unb;
-	long double			ld;
-	size_t				sizet;
-	intmax_t			imt;
-	double				db;
-	int					*n;
-	void				*vd;
 	char				*st;
-	int					order;
 	wchar_t				*wst;
 	struct s_flag		*next;
 }						t_flag;
@@ -77,9 +70,9 @@ int						manage_nb(t_flag *tmp, char *buff);
 int						manage_string(t_flag *tmpa, char *buff);
 int						manage_char(t_flag *tmp, char *buff);
 char					*ft_bchar(char c, size_t length);
-char					*display_precision(char *new, t_flag *tmp);
-char					*display_width(char *new, t_flag *tmp);
-char					*correction_sign(char *new, t_flag *tmp);
+int						display_precision(char *buff, t_flag *tmp, int index);
+int						display_width(char *buff, t_flag *tmp, int index);
+int						correction_sign(char *new, t_flag *tmp, int index);
 int						manage_uni(t_flag *tmp, char *buff);
 int						compute_rep(char *c);
 int						manage_wstring(t_flag *tmp, char *buff);
@@ -89,8 +82,10 @@ int						compute_rep(char *c);
 void					check_width(char *str, int *i, t_flag *new, int *ret);
 void					check_wp(char *str, int *i, t_flag *new);
 void					free_lst(t_flag **flag);
-char					*print_buff(char *buff);
-char					*manage_buff(char *buff, char *str, size_t length);
-char					*add_right(char *buff, char *str, int index, size_t length);
+int						print_buff(char *buff);
+int						manage_buff(char *buff, char *str, size_t length);
+int						add_right(char *buff, char *str, int index, size_t length);
+int						add_char_right(char *buff, char c, int index, size_t length);
+int						add_char_left(char *buff, char c, int index, size_t length);
 
 #endif

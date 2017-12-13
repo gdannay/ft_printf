@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/21 10:02:16 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/11 18:38:45 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/13 18:12:06 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,6 @@ static void			fill_int(va_list va, t_flag *tmp)
 		tmp->nb = va_arg(va, long);
 	else if (tmp->length == 4)
 		tmp->nb = va_arg(va, long long);
-	else if (tmp->length == 5)
-		tmp->ld = va_arg(va, long double);
 	else if (tmp->length == 6)
 		tmp->nb = va_arg(va, size_t);
 	else if (tmp->length == 7)
@@ -97,8 +95,6 @@ static void			fill_content(va_list va, t_flag *tmp)
 		tmp->st = ft_strdup(va_arg(va, char *));
 	else if (tmp->inttype == 3)
 		tmp->unb = (unsigned long long)va_arg(va, void *);
-	else if (tmp->inttype == 5)
-		tmp->db = va_arg(va, double);
 	else if (tmp->inttype == 8)
 		tmp->nb = va_arg(va, wchar_t);
 	else if (tmp->inttype == 9)

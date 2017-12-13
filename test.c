@@ -1,11 +1,18 @@
 #include "ft_printf.h"
 #include <stdio.h>
+#include <locale.h>
 
 int		main()
 {
-	printf("\n%d", ft_printf("This is a simple test."));
+/*	char* l = setlocale(LC_ALL, "");
+	if (l == NULL) {
+		printf("Locale not set\n");
+	} else {
+		printf("Locale set to %s\n", l);
+	}*/
+	printf("\n%d", ft_printf("%%"));
 	printf("\n");
-	printf("\n%d", printf("This is a simple test."));
+	printf("\n%d", printf("%-5.2s is a string", "this"));
 	ft_printf("\n");
 	ft_printf("%%\n");
 	ft_printf("%d\n", 42);

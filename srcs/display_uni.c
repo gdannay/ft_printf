@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 11:14:17 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/13 10:44:21 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/13 19:10:58 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,60 +77,61 @@ static int		ft_putuni(char *c, int rep)
 	return (1);
 }
 
-static int		manage_wc(t_flag *tmp, char *c, int rep)
+static int		manage_wc(char *buff, t_flag *tmp, char *c, int rep)
 {
-	char	*new;
 	char	*c2;
 	int		i;
+	int		l;
 
 	i = 0;
 	tmp->nb = 1;
-	if ((c2 = chartostr(tmp->nb)) == NULL
-			|| (new = display_precision(c2, tmp)) == NULL
-			|| (new = display_width(c2, tmp)) == NULL)
+	l = 0;
+	if ((c2 = chartostr(tmp->nb)) == NULL)
 		return (0);
-	while (new[i] != '\0')
+	l += manage_buff(buff, c2, 1);
+	l += display_precision(buff, tmp, 1);
+	l += display_width(buff, tmp, 1);
+	while (buff[i] != '\0')
 	{
-		if (new[i] == 1)
+		if (buff[i] == 1)
 		{
 			if (ft_putuni(c, rep) == 0)
 				return (0);
 		}
 		else
-			ft_putchar(new[i]);
+			ft_putchar(buff[i]);
 		i++;
 	}
 	ft_strdel(&c2);
-	ft_strdel(&new);
-	return (1);
+	return (1 + l);
 }
 
 int				manage_uni(t_flag *tmp, char *buff)
 {
 	char	*c;
 	int		rep;
+	int		l;
 
-	buff = print_buff(buff);
+	l = 0;
+	if (tmp->intdisplay != 9)
+		l = print_buff(buff);
 	if ((c = ltoa_base(tmp, BINA)) == NULL)
 		return (0);
 	rep = compute_rep(c);
 	if (tmp->intdisplay == 8 && rep == 1)
 	{
 		ft_strdel(&c);
-		return (manage_char(tmp, buff));
+		return (l + manage_char(tmp, buff));
 	}
 	else if (tmp->intdisplay == 9 && rep == 1)
 		write(1, &(tmp->nb), 1);
 	else if (tmp->type == 'C' && (tmp->precision >= 0 || tmp->width >= 0))
-	{
-		if (manage_wc(tmp, c, rep) == 0)
-			return (0);
-	}
+		l += manage_wc(buff, tmp, c, rep);
 	else
 	{
 		if ((ft_putuni(c, rep)) == 0)
 			return (0);
 	}
 	ft_strdel(&c);
-	return (rep);
+	return (rep + l);
 }

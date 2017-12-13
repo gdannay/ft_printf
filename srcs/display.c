@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 15:03:31 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/13 11:15:51 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/13 19:10:51 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,7 @@ static int		display_normal(char *str, int *i, char *buff)
 		length++;
 		*i = *i + 1;
 	}
-	buff = manage_buff(buff, str + j, (size_t)(*i - j));
-	return (length);
+	return (manage_buff(buff, str + j, (size_t)(*i - j)));
 }
 
 static void		manage_undefined(char *str, int *i, t_flag *tmp)
@@ -64,25 +63,24 @@ int				display(char *str, t_flag *flag)
 
 	i = 0;
 	length = 0;
-	tmp = flag;
 	buff[0] = '\0';
+	tmp = flag;
 	while (str && str[i] != '\0')
 	{
 		if (str[i] == '%' && str[i + 1] && tmp->inttype != 0)
 		{
-			if (tmp)
-				length += manage_display(tmp, buff);
+			length += manage_display(tmp, buff);
 			i++;
 			while (str[i + 1] && str[i] != tmp->type)
 				i++;
 			tmp = tmp->next;
 			i++;
 		}
-		else if (str[i] == '%' && ((!tmp) || tmp->inttype == 0))
+		else if (str[i] == '%' && ((!tmp) ||tmp->inttype == 0))
 			manage_undefined(str, &i, tmp);
 		else
 			length += display_normal(str, &i, buff);
 	}
-	print_buff(buff);
+	length += print_buff(buff);
 	return (length);
 }
