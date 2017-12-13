@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/01 10:23:15 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/11 19:48:08 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/13 12:13:26 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ static char		*display_hash_zero(char *new, t_flag *tmp)
 	return (new);
 }
 
-int				display_flag(char *new, t_flag *tmp)
+int				display_flag(char *new, t_flag *tmp, char *buff)
 {
 	int		length;
 
@@ -120,7 +120,7 @@ int				display_flag(char *new, t_flag *tmp)
 			|| (new = correction_sign(new, tmp)) == NULL)
 		return (0);
 	if (tmp->nb != 0 || (tmp->type != 'C' && tmp->type != 'c'))
-		write(1, new, ft_strlen(new));
+		buff = manage_buff(buff, new, ft_strlen(new));
 	length = (int)ft_strlen(new);
 	ft_strdel(&new);
 	return (length);

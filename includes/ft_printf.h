@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/21 10:06:04 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/11 20:03:46 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/13 12:00:31 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # define HEXAMIN "0123456789abcdef"
 # define HEXAMAJ "0123456789ABCDEF"
 # define OCTA "01234567"
+# define BUFF_SIZE 4096
 
 typedef struct			s_flag
 {
@@ -71,22 +72,25 @@ int						display(char *str, t_flag *flag);
 char					*ltoa_base(t_flag *tmp, char *base);
 char					*utoa_base(t_flag *tmp, char *base);
 char					*chartostr(long long c);
-int						display_flag(char *new, t_flag *tmp);
-int						manage_nb(t_flag *tmp);
-int						manage_string(t_flag *tmp);
-int						manage_char(t_flag *tmp);
+int						display_flag(char *new, t_flag *tmp, char *buff);
+int						manage_nb(t_flag *tmp, char *buff);
+int						manage_string(t_flag *tmpa, char *buff);
+int						manage_char(t_flag *tmp, char *buff);
 char					*ft_bchar(char c, size_t length);
 char					*display_precision(char *new, t_flag *tmp);
 char					*display_width(char *new, t_flag *tmp);
 char					*correction_sign(char *new, t_flag *tmp);
-int						manage_uni(t_flag *tmp);
+int						manage_uni(t_flag *tmp, char *buff);
 int						compute_rep(char *c);
-int						manage_wstring(t_flag *tmp);
+int						manage_wstring(t_flag *tmp, char *buff);
 int						size_hexa(long long n);
-int						display_0(t_flag *tmp, char *c);
+int						display_0(t_flag *tmp, char *c, char *buff);
 int						compute_rep(char *c);
 void					check_width(char *str, int *i, t_flag *new, int *ret);
 void					check_wp(char *str, int *i, t_flag *new);
 void					free_lst(t_flag **flag);
+char					*print_buff(char *buff);
+char					*manage_buff(char *buff, char *str, size_t length);
+char					*add_right(char *buff, char *str, int index, size_t length);
 
 #endif

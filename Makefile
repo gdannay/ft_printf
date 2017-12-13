@@ -6,7 +6,7 @@
 #    By: gdannay <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/11 17:15:07 by gdannay           #+#    #+#              #
-#    Updated: 2017/12/11 18:36:28 by gdannay          ###   ########.fr        #
+#    Updated: 2017/12/13 10:28:01 by gdannay          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,7 @@ SRCS	=	./srcs/ft_printf.c		\
 			./srcs/lib.c			\
 			./srcs/manage_flag.c	\
 			./srcs/check_wp.c		\
+			./srcs/manage_buff.c	\
 			./srcs/display.c		\
 			./srcs/ltoa_base.c		\
 			./srcs/display_type.c	\
@@ -38,7 +39,9 @@ SRCS	=	./srcs/ft_printf.c		\
 			./libft/ft_lennbr.c		\
 			./libft/ft_atoi_base.c	\
 			./libft/ft_wstrlen.c	\
-			./libft/ft_wstrdup.c	
+			./libft/ft_wstrdup.c	\
+			./libft/ft_strncat.c	\
+			./libft/ft_strcat.c
 
 OBJS	=	$(SRCS:.c=.o)
 
@@ -59,11 +62,11 @@ $(NAME)	:	$(OBJS) $(LIBFT)
 			$(CC) -o $@ -c $< $(CFLAGS)
 
 clean	:
-			make clean -C libft
+			@echo "make clean -C libft"
 			rm -rf $(OBJS)
 
 fclean	:
-			make fclean -C libft
+			@echo "make fclean -C libft"
 			rm -rf $(OBJS)
 			rm -rf $(NAME)
 

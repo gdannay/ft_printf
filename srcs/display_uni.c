@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 11:14:17 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/11 19:26:23 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/13 10:44:21 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,18 +105,19 @@ static int		manage_wc(t_flag *tmp, char *c, int rep)
 	return (1);
 }
 
-int				manage_uni(t_flag *tmp)
+int				manage_uni(t_flag *tmp, char *buff)
 {
 	char	*c;
 	int		rep;
 
+	buff = print_buff(buff);
 	if ((c = ltoa_base(tmp, BINA)) == NULL)
 		return (0);
 	rep = compute_rep(c);
 	if (tmp->intdisplay == 8 && rep == 1)
 	{
 		ft_strdel(&c);
-		return (manage_char(tmp));
+		return (manage_char(tmp, buff));
 	}
 	else if (tmp->intdisplay == 9 && rep == 1)
 		write(1, &(tmp->nb), 1);

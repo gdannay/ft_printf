@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/21 15:24:19 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/11 18:39:23 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/13 10:39:57 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int			size_hexa(long long n)
 	return (taille);
 }
 
-int			display_0(t_flag *tmp, char *c)
+int			display_0(t_flag *tmp, char *c, char *buff)
 {
 	int		i;
 	char	*new;
@@ -77,6 +77,7 @@ int			display_0(t_flag *tmp, char *c)
 	i = 0;
 	new = NULL;
 	tmp->nb = 1;
+	buff = print_buff(buff);
 	if ((c = chartostr(tmp->nb)) == NULL
 			|| (new = display_precision(c, tmp)) == NULL
 			|| (new = display_width(c, tmp)) == NULL)

@@ -6,33 +6,31 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 15:03:31 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/11 18:14:58 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/13 11:15:51 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int		manage_display(t_flag *tmp)
+static int		manage_display(t_flag *tmp, char *buff)
 {
 	int		length;
 
 	length = 0;
 	if (tmp->intdisplay == 1 || tmp->intdisplay == 6)
-		length = manage_nb(tmp);
-	else if (tmp->intdisplay == 2)
-		length = manage_char(tmp);
+		length = manage_nb(tmp, buff);
 	else if (tmp->intdisplay == 9)
-		length = manage_wstring(tmp);
+		length = manage_wstring(tmp, buff);
 	else if (tmp->intdisplay == 8)
-		length = manage_uni(tmp);
+		length = manage_uni(tmp, buff);
 	else if (tmp->intdisplay == 2 || tmp->intdisplay == 9)
-		length = manage_char(tmp);
+		length = manage_char(tmp, buff);
 	else if (tmp->intdisplay == 3)
-		length = manage_string(tmp);
+		length = manage_string(tmp, buff);
 	return (length);
 }
 
-static int		display_normal(char *str, int *i)
+static int		display_normal(char *str, int *i, char *buff)
 {
 	int length;
 	int j;
@@ -44,7 +42,7 @@ static int		display_normal(char *str, int *i)
 		length++;
 		*i = *i + 1;
 	}
-	write(1, str + j, (size_t)(*i - j));
+	buff = manage_buff(buff, str + j, (size_t)(*i - j));
 	return (length);
 }
 
@@ -62,16 +60,18 @@ int				display(char *str, t_flag *flag)
 	int		i;
 	int		length;
 	t_flag	*tmp;
+	char	buff[BUFF_SIZE];
 
 	i = 0;
 	length = 0;
 	tmp = flag;
+	buff[0] = '\0';
 	while (str && str[i] != '\0')
 	{
 		if (str[i] == '%' && str[i + 1] && tmp->inttype != 0)
 		{
 			if (tmp)
-				length += manage_display(tmp);
+				length += manage_display(tmp, buff);
 			i++;
 			while (str[i + 1] && str[i] != tmp->type)
 				i++;
@@ -81,7 +81,8 @@ int				display(char *str, t_flag *flag)
 		else if (str[i] == '%' && ((!tmp) || tmp->inttype == 0))
 			manage_undefined(str, &i, tmp);
 		else
-			length += display_normal(str, &i);
+			length += display_normal(str, &i, buff);
 	}
+	print_buff(buff);
 	return (length);
 }

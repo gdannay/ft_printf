@@ -6,7 +6,7 @@
 /*   By: gdannay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/02 18:22:57 by gdannay           #+#    #+#             */
-/*   Updated: 2017/12/11 19:17:26 by gdannay          ###   ########.fr       */
+/*   Updated: 2017/12/13 10:38:53 by gdannay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static char		*manage_hexa(t_flag *tmp)
 	return (new);
 }
 
-int				manage_nb(t_flag *tmp)
+int				manage_nb(t_flag *tmp, char *buff)
 {
 	char	*new;
 
@@ -89,10 +89,10 @@ int				manage_nb(t_flag *tmp)
 		return (0);
 	if (tmp->precision == 0 && ft_strncmp(new, "0", 1) == 0)
 		ft_strdel(&new);
-	return (display_flag(new, tmp));
+	return (display_flag(new, tmp, buff));
 }
 
-int				manage_string(t_flag *tmp)
+int				manage_string(t_flag *tmp, char *buff)
 {
 	char	*tmptxt;
 
@@ -102,32 +102,32 @@ int				manage_string(t_flag *tmp)
 			return (0);
 	}
 	if (tmp->precision == 0)
-		return (display_flag(NULL, tmp));
+		return (display_flag(NULL, tmp, buff));
 	else if (tmp->precision > 0)
 	{
 		if ((tmptxt = ft_strndup(tmp->st, (size_t)tmp->precision)) == NULL)
 			return (0);
-		return (display_flag(tmptxt, tmp));
+		return (display_flag(tmptxt, tmp, buff));
 	}
 	else
 	{
 		if ((tmptxt = ft_strdup(tmp->st)) == NULL)
 			return (0);
-		return (display_flag(tmptxt, tmp));
+		return (display_flag(tmptxt, tmp, buff));
 	}
 }
 
-int				manage_char(t_flag *tmp)
+int				manage_char(t_flag *tmp, char *buff)
 {
 	char	*c;
 
 	c = NULL;
 	if (tmp->nb == 0)
-		return (display_0(tmp, c));
+		return (display_0(tmp, c, buff));
 	else
 	{
 		if ((c = chartostr(tmp->nb)) == NULL)
 			return (0);
-		return (display_flag(c, tmp));
+		return (display_flag(c, tmp, buff));
 	}
 }
