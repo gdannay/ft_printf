@@ -17,11 +17,11 @@ int			display_width(char *buff, t_flag *tmp, int index)
 	if ((int)ft_strlen(buff) - index < tmp->width)
 	{
 		if (tmp->minus == 1)
-			return (add_char_left(buff, ' ', index, (size_t)tmp->width - ft_strlen(buff) + index));
+			return (add_char_left(buff, ' ', &index, (size_t)tmp->width - ft_strlen(buff) + index));
 		else if (tmp->zero == 1)
 		{
 			if (tmp->type == 'p')
-				return (add_char_left(buff, '0', index, (size_t)tmp->width - ft_strlen(buff) + index));
+				return (add_char_left(buff, '0', &index, (size_t)tmp->width - ft_strlen(buff) + index));
 			else
 				return (add_char_right(buff, '0', index, (size_t)tmp->width - ft_strlen(buff) + index));
 		}

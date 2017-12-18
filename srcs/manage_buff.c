@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-int		add_char_left(char *buff, char c, int index, size_t length)
+int		add_char_left(char *buff, char c, int *index, size_t length)
 {
 	int l;
 	int i;
@@ -21,7 +21,7 @@ int		add_char_left(char *buff, char c, int index, size_t length)
 	i = 0;
 	if ((size_t)BUFF_SIZE - ft_strlen(buff) < length)
 	{
-		index = 0;
+		*index = 0;
 		l = print_buff(buff);
 	}
 	while (buff[i] != '\0')

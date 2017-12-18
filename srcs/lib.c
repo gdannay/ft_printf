@@ -69,12 +69,10 @@ int			size_hexa(long long n)
 int			display_0(t_flag *tmp, char *c, char *buff)
 {
 	int		i;
-	char	*new;
 	int l;
 
 	i = 0;
 	l = 0;
-	new = NULL;
 	tmp->nb = 1;
 	l = print_buff(buff);
 	if ((c = chartostr(tmp->nb)) == NULL)
